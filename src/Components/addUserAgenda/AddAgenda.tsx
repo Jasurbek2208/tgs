@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { IContext, MyContext } from "../../../context/Context";
 
 import Botton from "../botom/Botton";
-import Input from "../input/Input";
+import Input from "../../Components/input/Input";
 
 export interface Field {
   id: number;
