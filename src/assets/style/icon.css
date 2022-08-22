@@ -96,6 +96,10 @@
   mask-image: url("../icon/Icon4.svg");
   -webkit-mask-image: url("../icon/Icon4.svg");
 }
+.icon-icon5 {
+  mask-image: url("../icon/Icon5.svg");
+  -webkit-mask-image: url("../icon/Icon5.svg");
+}
 .icon-search {
   mask-image: url("../icon/search.svg");
   -webkit-mask-image: url("../icon/search.svg");
