@@ -11,6 +11,7 @@ import {UsersMain} from "../Components/usermain/UsersMain";
 import Positions from "../pages/admin/positions/Positions";
 import Fields from "../pages/admin/fields/Fields";
 import Settings from "../pages/settings/Settings";
+import Agenda from "../pages/admin/agenda/Agenda";
 
 export interface IAuth {
   auth?: {
@@ -39,6 +40,7 @@ export default function Router() {
             <Route path="/users" element={<UsersMain />} />
             <Route path="/fields" element={<Fields />} />
             <Route path="/positions" element={<Positions />} />
+            <Route path="/agenda" element={<Agenda />} />
             <Route path="/settings" element={<Settings/>} />
             <Route path="*" element={<Navigate to="users" />} />
           </Route>

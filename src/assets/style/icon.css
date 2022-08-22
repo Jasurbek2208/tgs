@@ -84,6 +84,10 @@
   mask-image: url("../icon/addUsers.svg");
   -webkit-mask-image: url("../icon/addUsers.svg");
 }
+.icon-agenda{
+  mask-image: url("../icon/agenda.svg");
+  -webkit-mask-image: url("../icon/agenda.svg");
+}
 .icon-icon3 {
   mask-image: url("../icon/Icon3.svg");
   -webkit-mask-image: url("../icon/Icon3.svg");

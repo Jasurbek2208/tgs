@@ -14,6 +14,8 @@ export default function Navbar() {
               ? "Fields"
               : location === "/positions"
               ? "Positions"
+              : location === "/agenda"
+              ? "Agenda"
               : location === "/settings"
               ? "Settings"
               : "Users"}

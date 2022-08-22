@@ -17,7 +17,7 @@ export default function () {
 const StyledLayout = styled.div`
   .layout {
     margin-left: 100px;
-    width: 93%;
+    width: 92%;
     height: 100vh;
     background: #f8f8f8;
   }

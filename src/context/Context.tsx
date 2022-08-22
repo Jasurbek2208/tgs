@@ -15,18 +15,28 @@ export const MyContext = createContext({});
 //
 
 export interface IContext {
+  // Login
   auth?: {};
   setAuth?: Dispatch<SetStateAction<{}>>;
   userLogin?: () => Response;
+  // Position
   getPosition?: () => Promise<void>;
   postPosition?: Function;
   deletePosition?: Function;
   userPosit?: IPosit;
   setUserPosit?: Dispatch<SetStateAction<{}>>;
+  // Field
   getFeild?: () => Promise<void>;
   userField?: IPosit;
   postFeild?: Function;
   deleteFeild?: Function;
+  // Agenda
+  userAgenda?: IPosit;
+  setUserAgenda?: Dispatch<SetStateAction<{}>>;
+  getAgenda?: () => Promise<void>;
+  postAgenda?: Function;
+  deleteAgenda?: Function;
+  // Loading
   loading?: boolean;
   addLoading?: boolean;
   setLoading?: Function;
@@ -68,6 +78,9 @@ export interface IData {
     ru: string;
   };
   __v: number;
+  type: string;
+  startTime: string;
+  endTime: string;
 }
 
 const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
@@ -84,7 +97,12 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
 
   // POSITION REQUEST INTERFACE
   const [userPosit, setUserPosit] = useState<IPosit[]>([]);
+  // FIELD REQUEST INTERFACE
   const [userField, setUserField] = useState<IPosit[]>([]);
+  // AGENDA REQUEST INTERFACE
+  const [userAgenda, setUserAgenda] = useState<IPosit[]>([]);
+
+  // LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
   // AUTH STATE SUCSESS SET
@@ -198,6 +216,47 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   }
   // ===============================================
 
+  // AGENDA GET STATE SUCSESS SET
+  function sucsessAgenda(res: IPosit[]) {
+    setUserAgenda(res);
+  }
+
+  // Agenda GET
+  async function getAgenda() {
+    setLoading(true);
+    try {
+      const res = await myAxios.get("/agenda");
+      if (res?.data) sucsessAgenda(res.data.data);
+    } catch (error) {
+      console.log("Ishlamadi Agenda !");
+    } finally {
+      setLoading(false);
+    }
+  }
+  // Agenda DELETE
+  async function deleteAgenda(ids: {}) {
+    try {
+      const res = await myAxios.delete("/agenda", { data: ids });
+      getAgenda();
+    } catch (error) {
+      console.log("Delete Agenda ishlamadi !");
+    }
+  }
+
+  // Agenda POST
+  async function postAgenda(name: {}) {
+    setLoading(true);
+    try {
+      const res = await myAxios.post("/agenda", name);
+      getAgenda();
+    } catch (error) {
+      console.log("Agenda Agenda ishlamadi !");
+    } finally {
+      setLoading(false);
+    }
+  }
+  // ===============================================
+
   return (
     <MyContext.Provider
       value={{
@@ -213,8 +272,10 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         getFeild,
         userField,
         deleteFeild,
+        postAgenda,
+        getAgenda,
+        deleteAgenda,
         loading,
-        // addLoading,
         setLoading,
       }}
     >
