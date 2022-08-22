@@ -20,6 +20,15 @@ function PositionCard() {
   const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
 
+  const [curent, setCurent] = useState({
+    _id: "",
+    name: {
+      uz: "",
+      ru: "",
+      en: "",
+    },
+  });
+
   // DELETE LOGICKASI....
   function checkedClick(id: string) {
     if (checkStore.includes(id)) {
@@ -72,7 +81,9 @@ function PositionCard() {
                   "icon " +
                   (checkStore.length === 1 ? "icon-icon2" : "icon-addUser")
                 }
-                onClick={() => setisopen(true)}
+                onClick={() => {
+                  setisopen(true);
+                }}
               ></div>
               <div className="icon icon-icon3"></div>
               <div className="icon icon-icon4"></div>
@@ -94,15 +105,25 @@ function PositionCard() {
         {loading ? (
           <Loader />
         ) : (
-          userPosit?.data?.map((i: IData, idx: number) => (
+          userPosit?.data?.map((i: any, idx: number) => (
             <div className="map" key={idx}>
               <div className="fullName">
                 <input
                   type="checkbox"
                   checked={checkStore.includes(i._id)}
-                  onChange={() => checkedClick(i._id)}
+                  onChange={() => {
+                    checkedClick(i._id);
+                    setCurent(i);
+                  }}
                 />
-                <p>{i?.name.uz}</p>
+                <p
+                  onClick={() => {
+                    setisopen(true);
+                    setCurent(i);
+                  }}
+                >
+                  {i?.name.uz}
+                </p>
               </div>
               <div className="date">
                 <p>{i?.__v}</p>
@@ -122,6 +143,7 @@ function PositionCard() {
         <AddUserModalPosition
           adduser={checkStore.length === 1 ? false : true}
           set={setisopen}
+          user={curent}
         />
       ) : null}
     </UsersStyled2>

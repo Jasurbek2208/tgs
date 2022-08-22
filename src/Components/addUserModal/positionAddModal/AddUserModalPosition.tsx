@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { IContext, MyContext } from "../../../context/Context";
@@ -13,9 +13,21 @@ export interface Field {
 interface Adduser {
   adduser: boolean;
   set: Function;
+  user?: {
+    _id: string;
+    name: {
+      uz: string;
+      ru: string;
+      en: string;
+    }
+  };
 }
-export default function AddUserModalPosition({ adduser, set }: Adduser) {
-  const { postPosition } = useContext<IContext>(MyContext);
+export default function AddUserModalPosition({
+  adduser,
+  set,
+  user,
+}: Adduser) {
+  const { postPosition, putPosition } = useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
     uz: "",
@@ -29,8 +41,15 @@ export default function AddUserModalPosition({ adduser, set }: Adduser) {
   }
 
   function save() {
-    if (postPosition) {
-      postPosition({ name });
+    if (user?.name?.uz === "") {
+      if (postPosition) {
+        postPosition({ name });
+      }
+    } else {
+      const _id = user?._id;
+      if (putPosition) {
+        putPosition({_id, name});
+      } 
     }
     setName({
       uz: "",
@@ -39,6 +58,11 @@ export default function AddUserModalPosition({ adduser, set }: Adduser) {
     });
     set(false);
   }
+
+  useEffect(() => {
+    if (!user?._id) return;
+    setName(user.name);
+  }, []);
 
   return (
     <Styledapp>

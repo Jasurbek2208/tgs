@@ -22,6 +22,7 @@ export interface IContext {
   // Position
   getPosition?: () => Promise<void>;
   postPosition?: Function;
+  putPosition?: Function;
   deletePosition?: Function;
   userPosit?: IPosit;
   setUserPosit?: Dispatch<SetStateAction<{}>>;
@@ -173,6 +174,18 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
       setLoading(false);
     }
   }
+  // PUT Position
+  async function putPosition(user: {}) {
+    setLoading(true);
+    try {
+      const res = await myAxios.put("/position", user);
+      getPosition();
+    } catch (error) {
+      console.log("Put Position ishlamadi !");
+    } finally {
+      setLoading(false);
+    }
+  }
   // ===============================================
 
   // FIELD CRUD FUNCTIONS ======================
@@ -267,6 +280,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         setUserPosit,
         getPosition,
         postPosition,
+        putPosition,
         deletePosition,
         postFeild,
         getFeild,
