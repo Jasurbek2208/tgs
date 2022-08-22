@@ -1,10 +1,11 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
 
-import { IContext, MyContext } from "../../../context/Context";
+import { IContext, MyContext } from "../../context/Context";
 
-import Botton from "../botom/Botton";
-import Input from "../../Components/input/Input";
+import Botton from "../addUserModal/botom/Botton";
+import Input from "../addUserModal/input/Input";
+import Secect from "../addUserModal/select/select2/Secect";
 
 export interface Field {
   id: number;
@@ -43,7 +44,8 @@ export default function AddAgenda({ adduser, set }: Adduser) {
   return (
     <Styledapp>
       <form action="">
-        <h1>{adduser ? "Add position" : "Edit position"}</h1>
+        <h1>{adduser ? "Add activity" : "Edit activity"}</h1>
+        {/* <Secect options={}  /> */}
         <Input
           placeholder="Name in English * *"
           onChange={onchange}
@@ -60,6 +62,27 @@ export default function AddAgenda({ adduser, set }: Adduser) {
         />
         <Input
           placeholder="Name in Uzbek *"
+          name="en"
+          onChange={onchange}
+          value={name.en}
+          setName={setName}
+        />
+        <Input
+          placeholder="Start time *"
+          name="en"
+          onChange={onchange}
+          value={name.en}
+          setName={setName}
+        />
+        <Input
+          placeholder="End time *"
+          name="en"
+          onChange={onchange}
+          value={name.en}
+          setName={setName}
+        />
+        <Input
+          placeholder="Speaker"
           name="en"
           onChange={onchange}
           value={name.en}
