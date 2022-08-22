@@ -13,6 +13,7 @@ import { IContext, IData, MyContext } from "../../../context/Context";
 
 // Loading
 import Loader from "../../../Components/Loader/Loader";
+import AddAgenda from "../../../Components/addUserAgenda/AddAgenda";
 
 function AgendaCard() {
   const { getAgenda, deleteAgenda, userAgenda, loading } =
