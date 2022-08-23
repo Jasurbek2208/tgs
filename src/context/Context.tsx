@@ -39,6 +39,7 @@ export interface IContext {
   setLoading?: Function;
   // users
   Getusers?:()=>Promise<void>;
+  users?:IPosit;
 }
 
 // Dispatch<SetStateAction<IState>>
