@@ -38,8 +38,6 @@ export interface IContext {
   addLoading?: boolean;
   setLoading?: Function;
   // users
-  Getusers?: () => Promise<void>;
-  users?: IPosit;
   Getusers?:()=>Promise<void>;
   users?:IPosit;
   postUsers?:Function;
@@ -108,7 +106,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // AGENDA REQUEST INTERFACE
   const [userAgenda, setUserAgenda] = useState<IPosit[]>([]);
   // AGENDA REQUEST INTERFACE
-  const [users, setusers] = useState<IPosit[]>([]);
+  const [users, setusers] = useState<IPosit[]>([])
   // LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -163,7 +161,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // position DELETE
   async function deletePosition(ids: {}) {
     try {
-      const res = await myAxios.delete("/position", ids);
+      const res = await myAxios.delete("/position", { data: ids });
       getPosition();
       
       toast.success(res.data.message);
@@ -294,19 +292,20 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     setLoading(true);
     try {
       const res = await myAxios("user?page=1&limit=10");
-      setusers(res.data.data);
+      setusers(res.data.data.data);
       console.log(res);
     } catch (error) {
-      throw error;
-    } finally {
+      throw error
+    }finally {
       setLoading(false);
     }
   }
   // post users
-  async function postUsers(body: any) {
+  async function postUsers(body) {
     setLoading(true)
     try {
       const res = await myAxios.post("/user",body)
+      Getusers()
       console.log(res);
       toast.success(res.data.message);
     } catch (error) {
@@ -316,15 +315,12 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   }
   }
   // delete users
-  async function usersDelete(ids:[]) {
+  async function usersDelete(ids:{}) {
     setLoading(true);
     try {
-<<<<<<< HEAD
-      const res = await myAxios.delete("user",{ids:[]})
+      const res = await myAxios.delete("user",{data:ids})
+      Getusers()
       toast.success(res.data.message);
-=======
-      const res = await myAxios.delete("user", {ids} )
->>>>>>> ad505d62c0b99cf621c94d5e11e1af5155d82d20
     } catch (error) {
       throw error
     }finally{
@@ -336,6 +332,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     setLoading(true)
     try { 
       const res = await myAxios.put("user",user);
+      Getusers()
       toast.success(res.data.message);
     } catch (error) {
       throw error
