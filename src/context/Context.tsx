@@ -6,14 +6,10 @@ import {
   SetStateAction,
   useState,
 } from "react";
-
 import { useNavigate } from "react-router-dom";
 import { myAxios } from "../service/axios/index";
 
 export const MyContext = createContext({});
-
-//
-
 export interface IContext {
   // Login
   auth?: {};
