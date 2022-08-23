@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
+import { IContext, IData, MyContext } from "../../context/Context";
 //
 import AddUserModal from "../addUserModal/userAddModal/AddUserModal";
+import Loader from "../Loader/Loader";
 import SearchInput from "../searchinput/SerchInput";
 import UsersCard from "./usersCard/UsersCard";
 import { UsersStyled } from "./UsersStyled";
@@ -86,7 +88,7 @@ export const UsersMain: React.FC = () => {
         <div className="end--div">
           <div className="user-information">
             <div className="expand">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={allChecked} />
               <p>Full name</p>
             </div>
             <div className="expand">
@@ -147,12 +149,15 @@ export const UsersMain: React.FC = () => {
       )}
 
       {/* USERS CARD */}
-      {/* <UsersCard /> */}
 
-      {/* ADD USER MODAL */}
-      {isopen ? <AddUserModal adduser={true} set={setisopen} /> : null}
+      {isopen ? (
+        <AddUserModal
+          adduser={checkStore.length === 1 ? false : true}
+          set={setisopen}
+          user={curent}
+        />
+      ) : null}
 
-      {/* <AddUserModal /> */}
       <UsersCard />
     </UsersStyled>
   );

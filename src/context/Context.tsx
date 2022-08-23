@@ -272,7 +272,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   async function Getusers() {
     try {
       const res = await myAxios("user?page=1&limit=10");
-      console.log(res);
+      console.log(res.data.data.data);
       
     } catch (error) {
 
