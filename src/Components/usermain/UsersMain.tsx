@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
+import styled from "styled-components";
 
 //
-import { IContext, IData, MyContext } from "../../context/Context";
+import {
+  IContext,
+  IData,
+  IPosit,
+  IUsers,
+  MyContext,
+} from "../../context/Context";
 
 //
 import AddUserModal from "../addUserModal/userAddModal/AddUserModal";
@@ -114,41 +121,52 @@ export const UsersMain: React.FC = () => {
           </div>
         </div>
       </section>
-      {loading ? (
-        <Loader />
-      ) : (
-        users?.data?.map((i: any, idx: number) => (
-          <div className="map" key={idx}>
-            <div className="fullName">
-              <input
-                type="checkbox"
-                checked={checkStore.includes(i._id)}
-                onChange={() => {
-                  checkedClick(i._id);
-                  setCurent(i);
-                }}
-              />
-              <p
-                onClick={() => {
-                  setisopen(true);
-                  setCurent(i);
-                }}
-              >
-                {i?.name.uz}
-              </p>
+      <StyledUserCard>
+        {loading ? (
+          <Loader />
+        ) : (
+          users?.data?.map((i: any) => (
+            <div className="map" key={i._id}>
+              <div className="fullName">
+                <input
+                  type="checkbox"
+                  checked={checkStore.includes(i?._id)}
+                  onChange={() => {
+                    checkedClick(i?._id);
+                    setCurent(i);
+                  }}
+                />
+                <p
+                  onClick={() => {
+                    setisopen(true);
+                    setCurent(i);
+                  }}
+                >
+                  {i?.fullName}
+                </p>
+              </div>
+              <div className="date">
+                <p>{i?.brand}</p>
+              </div>
+              <div className="soha">
+                <p>{i?.phoneNumber}</p>
+              </div>
+              <div className="brand">
+                <p style={{ marginLeft: "20px" }}>{i?.employeeCount}</p>
+              </div>
+              <div className="brand">
+                <p>{i?.fieldId}</p>
+              </div>
+              <div className="brand">
+                <p style={{ marginLeft: "20px" }}>{i?.__v}</p>
+              </div>
+              <div className="brand">
+                <p>{i?.positionId}</p>
+              </div>
             </div>
-            <div className="date">
-              <p>{i?.__v}</p>
-            </div>
-            <div className="soha">
-              <p>{i?.name.ru}</p>
-            </div>
-            <div className="brand">
-              <p>{i?.name.en}</p>
-            </div>
-          </div>
-        ))
-      )}
+          ))
+        )}
+      </StyledUserCard>
 
       {/* USERS CARD */}
 
@@ -159,8 +177,54 @@ export const UsersMain: React.FC = () => {
           user={curent}
         />
       ) : null}
-
-      <UsersCard />
     </UsersStyled>
   );
 };
+
+const StyledUserCard = styled.div`
+  div {
+    padding: 13px 18px;
+    display: flex;
+    align-items: center;
+
+    & > div {
+      width: 200px;
+      padding: 4px 0;
+
+      &.fullName {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        p {
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 17px;
+          color: #181c25;
+          margin: 0;
+        }
+      }
+
+      &.lavozimi {
+        display: flex;
+
+        .banOrAcrive {
+          cursor: pointer;
+          padding: 2.5px 8px;
+          background: rgba(255, 59, 59, 0.14);
+          border-radius: 6px;
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 14px;
+          color: #ff3b3b;
+        }
+      }
+
+      p {
+        color: #8992aa;
+        font-size: 13px;
+        line-height: 15px;
+      }
+    }
+  }
+`;

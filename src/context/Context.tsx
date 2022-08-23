@@ -40,11 +40,9 @@ export interface IContext {
   // users
   Getusers?: () => Promise<void>;
   users?: IPosit;
-  Getusers?:()=>Promise<void>;
-  users?:IPosit;
-  postUsers?:Function;
-  usersDelete?:Function;
-  usersPut?:Function;
+  postUsers?: Function;
+  usersDelete?: Function;
+  usersPut?: Function;
 }
 
 // Dispatch<SetStateAction<IState>>
@@ -86,6 +84,16 @@ export interface IData {
   type: string;
   startTime: string;
   endTime: string;
+}
+export interface IUsers {
+  _id?: string;
+  phoneNumber?: string;
+  fullName?: string;
+  fieldId?: string;
+  brand?: string;
+  employeeCount?: number;
+  positionId?: string;
+  __v?: number;
 }
 
 const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
@@ -290,36 +298,37 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   }
   // post users
   async function postUsers(body: any) {
-    setLoading(true)
+    setLoading(true);
     try {
-      const res = await myAxios.post("/user",body)
+      const res = await myAxios.post("/user", body);
       console.log(res);
     } catch (error) {
-      throw error
-    }finally{
-      setLoading(true)
-  }
+      throw error;
+    } finally {
+      setLoading(true);
+    }
   }
   // delete users
-  async function usersDelete(ids:[]) {
-    setLoading(true)
+  async function usersDelete(ids: {}) {
+    setLoading(true);
     try {
-      const res = await myAxios.delete("user", {ids} )
+      const res = await myAxios.delete("user", {data: ids});
+      Getusers();
     } catch (error) {
-      throw error
-    }finally{
-      setLoading(false)
+      throw error;
+    } finally {
+      setLoading(false);
     }
   }
   // git put
-  async function usersPut(user:{}) {
-    setLoading(true)
-    try { 
-      const res = await myAxios.put("user",user)
+  async function usersPut(user: {}) {
+    setLoading(true);
+    try {
+      const res = await myAxios.put("user", user);
     } catch (error) {
-      throw error
-    }finally{
-      setLoading(false)
+      throw error;
+    } finally {
+      setLoading(false);
     }
   }
 
