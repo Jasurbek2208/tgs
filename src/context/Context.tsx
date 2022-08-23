@@ -100,7 +100,8 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   const [userField, setUserField] = useState<IPosit[]>([]);
   // AGENDA REQUEST INTERFACE
   const [userAgenda, setUserAgenda] = useState<IPosit[]>([]);
-
+  // AGENDA REQUEST INTERFACE
+  const [users, setusers] = useState<IPosit[]>([])
   // LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -270,13 +271,20 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // USERS
   // get users
   async function Getusers() {
+    setLoading(true);
     try {
       const res = await myAxios("user?page=1&limit=10");
+<<<<<<< HEAD
       console.log(res.data.data.data);
       
+=======
+      setusers(res.data.data.data);
+      console.log(res);
+>>>>>>> c8f91b29a7a47300643562871e30697e26e5dd63
     } catch (error) {
-
       throw error
+    }finally {
+      setLoading(false);
     }
   }
 
@@ -302,6 +310,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         loading,
         setLoading,
         Getusers,
+        users,
       }}
     >
       {children}

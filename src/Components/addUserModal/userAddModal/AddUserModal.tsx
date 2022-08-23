@@ -24,7 +24,7 @@ interface Adduser {
   };
 }
 export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
-  const { postUsers, putUsers } = useContext<IContext>(MyContext);
+  const { postUsers, putUsers, users } = useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
     uz: "",
