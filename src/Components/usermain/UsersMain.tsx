@@ -1,13 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { IContext, MyContext } from "../../context/Context";
+
+//
+import { IContext, IData, MyContext } from "../../context/Context";
+
 //
 import AddUserModal from "../addUserModal/userAddModal/AddUserModal";
+import Loader from "../Loader/Loader";
 import SearchInput from "../searchinput/SerchInput";
 import UsersCard from "./usersCard/UsersCard";
 import { UsersStyled } from "./UsersStyled";
 
 export const UsersMain: React.FC = () => {
-  const { Getusers} = useContext<IContext>(MyContext);
+  const { Getusers, users, usersDelete, loading } =
+    useContext<IContext>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
 
@@ -20,6 +25,32 @@ export const UsersMain: React.FC = () => {
     },
   });
 
+  // DELETE LOGICKASI....
+  function checkedClick(id: string) {
+    if (checkStore.includes(id)) {
+      setCheckStore((p) => p.filter((i) => i !== id));
+    } else {
+      setCheckStore((p) => [...p, id]);
+    }
+  }
+
+  function allChecked(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      users?.data?.forEach((i: IData) => {
+        if (!checkStore.includes(i._id)) {
+          setCheckStore((p) => [...p, i._id]);
+        }
+      });
+    } else {
+      setCheckStore([]);
+    }
+  }
+
+  function deletePosit() {
+    if (usersDelete) {
+      usersDelete({ ids: checkStore });
+    }
+  }
   // ========================================
   // get
   useEffect(() => {
@@ -59,7 +90,7 @@ export const UsersMain: React.FC = () => {
         <div className="end--div">
           <div className="user-information">
             <div className="expand">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={allChecked} />
               <p>Full name</p>
             </div>
             <div className="expand">
@@ -86,7 +117,7 @@ export const UsersMain: React.FC = () => {
       {loading ? (
         <Loader />
       ) : (
-        userPosit?.data?.map((i: any, idx: number) => (
+        users?.data?.map((i: any, idx: number) => (
           <div className="map" key={idx}>
             <div className="fullName">
               <input
@@ -120,12 +151,15 @@ export const UsersMain: React.FC = () => {
       )}
 
       {/* USERS CARD */}
-      {/* <UsersCard /> */}
 
-      {/* ADD USER MODAL */}
-      {isopen ? <AddUserModal adduser={true} set={setisopen} /> : null}
+      {isopen ? (
+        <AddUserModal
+          adduser={checkStore.length === 1 ? false : true}
+          set={setisopen}
+          user={curent}
+        />
+      ) : null}
 
-      {/* <AddUserModal /> */}
       <UsersCard />
     </UsersStyled>
   );

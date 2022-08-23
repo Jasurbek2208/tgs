@@ -38,6 +38,8 @@ export interface IContext {
   addLoading?: boolean;
   setLoading?: Function;
   // users
+  Getusers?: () => Promise<void>;
+  users?: IPosit;
   Getusers?:()=>Promise<void>;
   users?:IPosit;
   postUsers?:Function;
@@ -106,7 +108,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // AGENDA REQUEST INTERFACE
   const [userAgenda, setUserAgenda] = useState<IPosit[]>([]);
   // AGENDA REQUEST INTERFACE
-  const [users, setusers] = useState<IPosit[]>([])
+  const [users, setusers] = useState<IPosit[]>([]);
   // LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -292,16 +294,16 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     setLoading(true);
     try {
       const res = await myAxios("user?page=1&limit=10");
-      setusers(res.data.data.data);
+      setusers(res.data.data);
       console.log(res);
     } catch (error) {
-      throw error
-    }finally {
+      throw error;
+    } finally {
       setLoading(false);
     }
   }
   // post users
-  async function postUsers(body) {
+  async function postUsers(body: any) {
     setLoading(true)
     try {
       const res = await myAxios.post("/user",body)
@@ -317,8 +319,12 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   async function usersDelete(ids:[]) {
     setLoading(true);
     try {
+<<<<<<< HEAD
       const res = await myAxios.delete("user",{ids:[]})
       toast.success(res.data.message);
+=======
+      const res = await myAxios.delete("user", {ids} )
+>>>>>>> ad505d62c0b99cf621c94d5e11e1af5155d82d20
     } catch (error) {
       throw error
     }finally{
