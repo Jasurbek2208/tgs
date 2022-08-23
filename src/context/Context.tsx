@@ -274,7 +274,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     setLoading(true);
     try {
       const res = await myAxios("user?page=1&limit=10");
-      setusers(res.data);
+      setusers(res.data.data.data);
       console.log(res);
     } catch (error) {
       throw error
@@ -305,6 +305,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         loading,
         setLoading,
         Getusers,
+        users,
       }}
     >
       {children}
