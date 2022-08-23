@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
+import React,{useState} from "react";
 import styled from "styled-components";
 
 interface IInput {
@@ -9,14 +9,8 @@ interface IInput {
   setName?: React.Dispatch<any>;
 }
 
-export default function Input({
-  placeholder,
-  onChange,
-  name,
-  value,
-  setName,
-}: IInput) {
-  
+export default function Input({placeholder,onChange,name,value,setName,}: IInput) {
+
   function clearClicked() {
     if (setName) {
       name === "uz"
@@ -26,7 +20,6 @@ export default function Input({
         : setName((p: {}) => ({ ...p, en: "" }));
     }
   }
-
   return (
     <StyledInput>
       <div className="div">

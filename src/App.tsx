@@ -2,6 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 //
 import "bootstrap/dist/css/bootstrap.css";
 
+import { ToastContainer } from 'react-toastify';
 //
 import { GlobalStyle } from "./assets/style/Global";
 
@@ -13,9 +14,11 @@ export function App() {
     <>
       <GlobalStyle />
       <BrowserRouter>
-        <LoginContext>
+      <ToastContainer>
+      <LoginContext>
           <Router />
         </LoginContext>
+      </ToastContainer>
       </BrowserRouter>
     </>
   );
