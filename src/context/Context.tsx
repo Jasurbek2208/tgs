@@ -37,6 +37,8 @@ export interface IContext {
   loading?: boolean;
   addLoading?: boolean;
   setLoading?: Function;
+  // users
+  Getusers?:()=>Promise<void>;
 }
 
 // Dispatch<SetStateAction<IState>>
@@ -265,6 +267,18 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // ===============================================
+  // USERS
+  // get users
+  async function Getusers() {
+    try {
+      const res = await myAxios("user?page=1&limit=10");
+      console.log(res);
+      
+    } catch (error) {
+
+      throw error
+    }
+  }
 
   return (
     <MyContext.Provider
@@ -287,6 +301,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         deleteAgenda,
         loading,
         setLoading,
+        Getusers,
       }}
     >
       {children}
