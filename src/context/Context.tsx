@@ -38,14 +38,13 @@ export interface IContext {
   addLoading?: boolean;
   setLoading?: Function;
   // users
-<<<<<<< HEAD
   Getusers?: () => Promise<void>;
   users?: IPosit;
-=======
   Getusers?:()=>Promise<void>;
   users?:IPosit;
   postUsers?:Function;
->>>>>>> fc9f7b183ca200c928cbb79bd7c3984009d369f9
+  usersDelete?:Function;
+  usersPut?:Function;
 }
 
 // Dispatch<SetStateAction<IState>>
@@ -290,7 +289,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // post users
-  async function postUsers(body) {
+  async function postUsers(body: any) {
     setLoading(true)
     try {
       const res = await myAxios.post("/user",body)
@@ -305,7 +304,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   async function usersDelete(ids:[]) {
     setLoading(true)
     try {
-      const res = await myAxios.delete("user",{ids:[]} )
+      const res = await myAxios.delete("user", {ids} )
     } catch (error) {
       throw error
     }finally{
@@ -346,8 +345,9 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         loading,
         setLoading,
         Getusers,
-        postUsers,
         users,
+        usersPut,
+        usersDelete,
       }}
     >
       {children}
