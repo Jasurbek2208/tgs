@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { IContext, MyContext } from "../../../context/Context";
 
-// 
+//
 import Botton from "../botom/Botton";
 import Input from "../input/Input";
 
@@ -24,7 +24,7 @@ interface Adduser {
   };
 }
 export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
-  const { postUsers, putUsers, users } = useContext<IContext>(MyContext);
+  const { postUsers, usersPut } = useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
     uz: "",
@@ -44,8 +44,8 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
       }
     } else {
       const _id = user?._id;
-      if (putUsers) {
-        putUsers({ _id, name });
+      if (usersPut) {
+        usersPut({ _id, name });
       }
     }
     setName({

@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-<<<<<<< HEAD
+
+//
 import { IContext, IData, MyContext } from "../../context/Context";
-=======
-import { IContext, MyContext } from "../../context/Context";
->>>>>>> c8f91b29a7a47300643562871e30697e26e5dd63
+
 //
 import AddUserModal from "../addUserModal/userAddModal/AddUserModal";
 import Loader from "../Loader/Loader";
@@ -12,7 +11,8 @@ import UsersCard from "./usersCard/UsersCard";
 import { UsersStyled } from "./UsersStyled";
 
 export const UsersMain: React.FC = () => {
-  const { Getusers} = useContext<IContext>(MyContext);
+  const { Getusers, users, usersDelete, loading } =
+    useContext<IContext>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
 
@@ -25,6 +25,32 @@ export const UsersMain: React.FC = () => {
     },
   });
 
+  // DELETE LOGICKASI....
+  function checkedClick(id: string) {
+    if (checkStore.includes(id)) {
+      setCheckStore((p) => p.filter((i) => i !== id));
+    } else {
+      setCheckStore((p) => [...p, id]);
+    }
+  }
+
+  function allChecked(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      users?.data?.forEach((i: IData) => {
+        if (!checkStore.includes(i._id)) {
+          setCheckStore((p) => [...p, i._id]);
+        }
+      });
+    } else {
+      setCheckStore([]);
+    }
+  }
+
+  function deletePosit() {
+    if (usersDelete) {
+      usersDelete({ ids: checkStore });
+    }
+  }
   // ========================================
   // get
   useEffect(() => {
@@ -91,7 +117,7 @@ export const UsersMain: React.FC = () => {
       {loading ? (
         <Loader />
       ) : (
-        userPosit?.data?.map((i: any, idx: number) => (
+        users?.data?.map((i: any, idx: number) => (
           <div className="map" key={idx}>
             <div className="fullName">
               <input

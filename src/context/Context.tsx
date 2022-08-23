@@ -38,8 +38,8 @@ export interface IContext {
   addLoading?: boolean;
   setLoading?: Function;
   // users
-  Getusers?:()=>Promise<void>;
-  users?:IPosit;
+  Getusers?: () => Promise<void>;
+  users?: IPosit;
 }
 
 // Dispatch<SetStateAction<IState>>
@@ -102,7 +102,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // AGENDA REQUEST INTERFACE
   const [userAgenda, setUserAgenda] = useState<IPosit[]>([]);
   // AGENDA REQUEST INTERFACE
-  const [users, setusers] = useState<IPosit[]>([])
+  const [users, setusers] = useState<IPosit[]>([]);
   // LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -275,16 +275,11 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     setLoading(true);
     try {
       const res = await myAxios("user?page=1&limit=10");
-<<<<<<< HEAD
-      console.log(res.data.data.data);
-      
-=======
-      setusers(res.data.data.data);
+      setusers(res.data.data);
       console.log(res);
->>>>>>> c8f91b29a7a47300643562871e30697e26e5dd63
     } catch (error) {
-      throw error
-    }finally {
+      throw error;
+    } finally {
       setLoading(false);
     }
   }
