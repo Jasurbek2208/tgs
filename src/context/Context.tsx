@@ -41,6 +41,8 @@ export interface IContext {
   Getusers?:()=>Promise<void>;
   users?:IPosit;
   postUsers?:Function;
+  usersDelete?:Function;
+  usersPut?:Function;
 }
 
 // Dispatch<SetStateAction<IState>>
@@ -341,8 +343,9 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         loading,
         setLoading,
         Getusers,
-        postUsers,
         users,
+        usersPut,
+        usersDelete,
       }}
     >
       {children}
