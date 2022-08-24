@@ -186,13 +186,13 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // PUT Position
-  async function putPosition(user: {}) {
+  async function putPosition(user:Object) {
     setLoading(true);
     try {
       const res = await myAxios.put("/position", user);
       getPosition();
       
-      toast.success(res.data.message);
+      toast.success(res.data.message);  
     } catch (error) {
       console.log("Put Position ishlamadi !");
     } finally {
@@ -240,9 +240,9 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // Feild PUT
-  async function PutFeild(body) {
+  async function PutFeild(body:{}) {
     try {
-      const res = await myAxios.put("",body);
+      const res = await myAxios.put("/field",body);
       toast.success(res.data.message);
       getFeild()
     } catch (error) {
@@ -312,10 +312,10 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // post users
-  async function postUsers(body) {
+  async function postUsers() {
     setLoading(true)
     try {
-      const res = await myAxios.post("/user",body)
+      const res = await myAxios.post("/user")
       Getusers()
       console.log(res);
       toast.success(res.data.message);
