@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import styled from "styled-components";
 import { IContext, MyContext } from "../../../context/Context";
 
@@ -23,7 +23,11 @@ interface Fields {
 }
 export default function Feild({ adduser, set,user }: Fields): JSX.Element {
   const { postFeild, PutFeild  } = useContext<IContext>(MyContext);
-
+  useEffect(() => {
+    if(!user?._id) return
+    setName(user.name);
+  }, []);
+  
   const [name, setName] = useState({
     uz: "",
     ru: "",
@@ -41,7 +45,7 @@ export default function Feild({ adduser, set,user }: Fields): JSX.Element {
         postFeild({ name });
       }
     } else {
-      const _id = user?._id;
+      let _id = user?._id;
       if (PutFeild) {
         PutFeild({_id, name});
       } 
