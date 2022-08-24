@@ -5,7 +5,7 @@ import { Field } from "../../userAddModal/AddUserModal";
 
 export interface SecectProps {
   options?: any;
-  usersDate?: IPosit;
+  usersDate?: any;
 }
 
 export default function Secect({ options, usersDate }: SecectProps) {
@@ -31,7 +31,7 @@ export default function Secect({ options, usersDate }: SecectProps) {
           <i className="icon ccc"></i>
         </div>
       </section>
-      {!assa ? (
+      {assa ? (
         <section className="select_list">
           <ul>
             {options
@@ -40,7 +40,7 @@ export default function Secect({ options, usersDate }: SecectProps) {
                     {i.name}asd
                   </li>;
                 })
-              : usersDate?.data?.map((i: IData) => {
+              : usersDate?.data?.data?.map((i: IData) => {
                   <li key={i._id} onClick={() => d(i.name.uz)}>
                     {i.name.uz}
                   </li>;

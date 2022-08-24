@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { IContext, MyContext } from "../../../context/Context";
-import Loader from "../../Loader/Loader";
+
 import Botton from "../botom/Botton";
 import Input from "../input/Input";
 
@@ -12,10 +12,17 @@ export interface Field {
 interface Fields {
   adduser: boolean;
   set: Function;
+  user?: {
+    _id: string;
+    name: {
+      uz: string;
+      ru: string;
+      en: string;
+    }
+  };
 }
-
-export default function Feild({ adduser, set }: Fields): JSX.Element {
-  const { postFeild, loading } = useContext<IContext>(MyContext);
+export default function Feild({ adduser, set,user }: Fields): JSX.Element {
+  const { postFeild, PutFeild  } = useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
     uz: "",
@@ -31,7 +38,13 @@ export default function Feild({ adduser, set }: Fields): JSX.Element {
   function save() {
     if (postFeild) {
       postFeild({ name });
+    } else {
+      const _id = user?._id;
+      if (PutFeild) {
+        PutFeild({_id, name});
+      } 
     }
+
     setName({
       uz: "",
       ru: "",

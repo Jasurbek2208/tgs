@@ -29,6 +29,7 @@ export interface IContext {
   userField?: IPosit;
   postFeild?: Function;
   deleteFeild?: Function;
+  PutFeild?: Function;
   // Agenda
   userAgenda?: IPosit;
   setUserAgenda?: Dispatch<SetStateAction<{}>>;
@@ -197,7 +198,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // PUT Position
-  async function putPosition(user: {}) {
+  async function putPosition(user:Object) {
     setLoading(true);
     try {
       const res = await myAxios.put("/position", user);
@@ -248,6 +249,16 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
       // toast.success(res.data.message);
     } catch (error) {
       console.log("Delete  ishlamadi !");
+    }
+  }
+  // Feild PUT
+  async function PutFeild(body:{}) {
+    try {
+      const res = await myAxios.put("/field",body);
+      // toast.success(res.data.message);
+      getFeild()
+    } catch (error) {
+      throw error
     }
   }
 
@@ -315,7 +326,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   async function postUsers(body: any) {
     setLoading(true);
     try {
-      const res = await myAxios.post("/user",body)
+      const res = await myAxios.post("/user")
       Getusers()
       console.log(res);
       // toast.success(res.data.message);
