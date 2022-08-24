@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IData, IPosit } from "../../../../context/Context";
 import { Field } from "../../userAddModal/AddUserModal";
@@ -8,15 +8,21 @@ export interface SecectProps {
   usersDate?: any;
 }
 
-export default function Secect({ options, usersDate }: SecectProps) {
+export default function Secect({
+  options = undefined,
+  usersDate,
+}: SecectProps) {
   const [assa, setassa] = useState(false);
   const [value, setvalue] = useState("");
   function d(name: string) {
     setvalue(name);
     setassa(false);
   }
+  useEffect(() => {
+    console.log(options);
+  }, []);
 
-  console.log(usersDate?.data?.[0]?.name.uz);
+  console.log(usersDate);
 
   return (
     <SelectStyled>
@@ -35,16 +41,16 @@ export default function Secect({ options, usersDate }: SecectProps) {
         <section className="select_list">
           <ul>
             {options
-              ? options?.map((i: Field) => {
+              ? options.map((i: any) => (
                   <li key={i.id} onClick={() => d(i.name)}>
-                    {i.name}asd
-                  </li>;
-                })
-              : usersDate?.data?.data?.map((i: IData) => {
+                    {i.name}
+                  </li>
+                ))
+              : usersDate?.data?.map((i: IData) => (
                   <li key={i._id} onClick={() => d(i.name.uz)}>
                     {i.name.uz}
-                  </li>;
-                })}
+                  </li>
+                ))}
           </ul>
         </section>
       ) : null}

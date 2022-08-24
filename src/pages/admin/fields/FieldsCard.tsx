@@ -115,7 +115,7 @@ const [current, setcurrent] = useState({
                     setisopen(true);
                     setcurrent(i);
                   }}
-                >{i?.name.en}</p>
+                >{i?.name.uz}</p>
               </div>
               <div className="date">
                 <p>{i?.__v}</p>
@@ -124,7 +124,7 @@ const [current, setcurrent] = useState({
                 <p>{i?.name.ru}</p>
               </div>
               <div className="brand">
-                <p>{i?.name.uz}</p>
+                <p>{i?.name.en}</p>
               </div>
             </div>
           ))
