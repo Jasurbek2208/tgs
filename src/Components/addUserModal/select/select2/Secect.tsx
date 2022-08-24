@@ -16,7 +16,7 @@ export default function Secect({ options, usersDate }: SecectProps) {
     setassa(false);
   }
 
-  console.log(usersDate);
+  console.log(usersDate?.data?.[0]?.name.uz);
 
   return (
     <SelectStyled>
