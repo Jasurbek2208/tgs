@@ -26,7 +26,7 @@ export default function Feild({ adduser, set,user }: Fields): JSX.Element {
   useEffect(() => {
     if(!user?._id) return
     setName(user.name);
-  }, []);
+  }, [user]);
   
   const [name, setName] = useState({
     uz: "",
