@@ -15,6 +15,9 @@ export default function Secect({ options, usersDate }: SecectProps) {
     setvalue(name);
     setassa(false);
   }
+
+  console.log(usersDate);
+
   return (
     <SelectStyled>
       <section
@@ -28,20 +31,20 @@ export default function Secect({ options, usersDate }: SecectProps) {
           <i className="icon ccc"></i>
         </div>
       </section>
-      {assa ? (
+      {!assa ? (
         <section className="select_list">
           <ul>
-          {options?.length > 0
-            ? options?.map((i: Field) => {
-                <li key={i.id} onClick={() => d(i.name)}>
-                  {i.name}
-                </li>;
-              })
-            : usersDate?.data?.map((i: IData) => {
-                <li key={i._id} onClick={() => d(i.name.uz)}>
-                  {i.name.uz}
-                </li>;
-              })}
+            {options
+              ? options?.map((i: Field) => {
+                  <li key={i.id} onClick={() => d(i.name)}>
+                    {i.name}asd
+                  </li>;
+                })
+              : usersDate?.data?.map((i: IData) => {
+                  <li key={i._id} onClick={() => d(i.name.uz)}>
+                    {i.name.uz}
+                  </li>;
+                })}
           </ul>
         </section>
       ) : null}

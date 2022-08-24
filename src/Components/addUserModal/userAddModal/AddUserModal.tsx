@@ -29,7 +29,8 @@ interface Adduser {
 
 export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
   // Context imports
-  const { postUsers, usersPut, userPosit, userField } = useContext<IContext>(MyContext);
+  const { postUsers, usersPut, userPosit, userField, getPosition, getFeild } =
+    useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
     uz: "",
@@ -62,6 +63,8 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
   }
 
   useEffect(() => {
+    if (getPosition) getPosition();
+    if (getFeild) getFeild();
     if (!user?._id) return;
     setName(user.name);
   }, []);

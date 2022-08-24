@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 //
 import "bootstrap/dist/css/bootstrap.css";
 
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 //
 import { GlobalStyle } from "./assets/style/Global";
 
@@ -12,14 +12,14 @@ import LoginContext from "./context/Context";
 export function App() {
   return (
     <>
-      <ToastContainer>
-        <GlobalStyle />
-        <BrowserRouter>
+      <GlobalStyle />
+      <BrowserRouter>
+        {/* <ToastContainer> */}
           <LoginContext>
             <Router />
           </LoginContext>
-        </BrowserRouter>
-      </ToastContainer>
+        {/* </ToastContainer> */}
+      </BrowserRouter>
     </>
   );
 }
