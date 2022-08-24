@@ -23,10 +23,7 @@ interface Fields {
 }
 export default function Feild({ adduser, set,user }: Fields): JSX.Element {
   const { postFeild, PutFeild  } = useContext<IContext>(MyContext);
-  useEffect(() => {
-    if(!user?._id) return
-    setName(user.name);
-  }, [user]);
+  
   
   const [name, setName] = useState({
     uz: "",
@@ -45,10 +42,11 @@ export default function Feild({ adduser, set,user }: Fields): JSX.Element {
         postFeild({ name });
       }
     } else {
+
       let _id = user?._id;
       if (PutFeild) {
         PutFeild({_id, name});
-      } 
+      }
     }
 
     setName({
@@ -58,6 +56,10 @@ export default function Feild({ adduser, set,user }: Fields): JSX.Element {
     });
     set(false);
   }
+  useEffect(() => {
+    if(!user?._id) return
+    setName(user.name);
+  }, []);
 
   return (
     <Styledapp>
@@ -85,7 +87,7 @@ export default function Feild({ adduser, set,user }: Fields): JSX.Element {
           setName={setName}
         />
         <div className="buton">
-          <Botton pe={false} typee="button" onclik={() => save()}>
+          <Botton pe={false} typee="submit" onclik={() => save()}>
             Save
           </Botton>
           <Botton typee="submit" pe={true} onclik={() => set(false)}>

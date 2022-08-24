@@ -25,7 +25,8 @@ const [current, setcurrent] = useState({
     name: {
         uz: "",
         ru: "",
-        en: "",}
+        en: "",
+      }
 })
   function checkedClick(id: string) {
     if (checkStore.includes(id)) {
@@ -105,12 +106,12 @@ const [current, setcurrent] = useState({
                 <input
                   type="checkbox"
                   checked={checkStore.includes(i._id)}
-                  onChange={() => {
+                  onChange={()=>{
                     checkedClick(i._id);
                     setcurrent(i);
                   }}
                 />
-                <p 
+                <p
                   onClick={() => {
                     setisopen(true);
                     setcurrent(i);

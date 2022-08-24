@@ -198,7 +198,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // PUT Position
-  async function putPosition(user:Object) {
+  async function putPosition(user:{}) {
     setLoading(true);
     try {
       const res = await myAxios.put("/position", user);
@@ -220,6 +220,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.post("/field", name);
       getFeild();
+      console.log(res);
       // toast.success(res.data.message);
     } catch (error) {
       console.log("Post Position ishlamadi !");
@@ -391,6 +392,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         postUsers,
         usersPut,
         usersDelete,
+        PutFeild,
       }}
     >
       {children}
