@@ -105,9 +105,17 @@ const [current, setcurrent] = useState({
                 <input
                   type="checkbox"
                   checked={checkStore.includes(i._id)}
-                  onChange={() => checkedClick(i._id)}
+                  onChange={() => {
+                    checkedClick(i._id);
+                    setcurrent(i);
+                  }}
                 />
-                <p>{i?.name.en}</p>
+                <p 
+                  onClick={() => {
+                    setisopen(true);
+                    setcurrent(i);
+                  }}
+                >{i?.name.en}</p>
               </div>
               <div className="date">
                 <p>{i?.__v}</p>
@@ -126,6 +134,7 @@ const [current, setcurrent] = useState({
             adduser={checkStore.length === 1 ? false : true}
             set={setisopen}
             user={current}
+            
           />
         ) : null}
       </UsersStyled>
