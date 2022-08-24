@@ -29,6 +29,7 @@ export interface IContext {
   userField?: IPosit;
   postFeild?: Function;
   deleteFeild?: Function;
+  PutFeild?:Function;
   // Agenda
   userAgenda?: IPosit;
   setUserAgenda?: Dispatch<SetStateAction<{}>>;
@@ -250,6 +251,16 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
       console.log("Delete  ishlamadi !");
     }
   }
+  // Feild PUT
+  async function PutFeild(body) {
+    try {
+      const res = await myAxios.put("",body);
+      toast.success(res.data.message);
+      getFeild()
+    } catch (error) {
+      throw error
+    }
+  }
 
   function sucsessField(res: IPosit[]) {
     setUserField(res);
@@ -381,6 +392,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         postUsers,
         usersPut,
         usersDelete,
+        PutFeild,
       }}
     >
       {children}
