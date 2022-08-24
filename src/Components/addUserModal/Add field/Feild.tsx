@@ -36,8 +36,10 @@ export default function Feild({ adduser, set,user }: Fields): JSX.Element {
   }
 
   function save() {
-    if (postFeild) {
-      postFeild({ name });
+    if (user?.name?.uz === "") {
+      if (postFeild) {
+        postFeild({ name });
+      }
     } else {
       const _id = user?._id;
       if (PutFeild) {
