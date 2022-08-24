@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { IData, IPosit } from "../../../../context/Context";
 import { Field } from "../../userAddModal/AddUserModal";
 
 export interface SecectProps {
-  options: Field[];
+  options?: any;
+  usersDate?: IPosit;
 }
 
-export default function Secect({ options }: SecectProps) {
+export default function Secect({ options, usersDate }: SecectProps) {
   const [assa, setassa] = useState(false);
   const [value, setvalue] = useState("");
   function d(name: string) {
@@ -29,11 +31,17 @@ export default function Secect({ options }: SecectProps) {
       {assa ? (
         <section className="select_list">
           <ul>
-            {options.map((i: Field) => (
-              <li key={i.id} onClick={() => d(i.name)}>
-                {i.name}
-              </li>
-            ))}
+          {options?.length > 0
+            ? options?.map((i: Field) => {
+                <li key={i.id} onClick={() => d(i.name)}>
+                  {i.name}
+                </li>;
+              })
+            : usersDate?.data?.map((i: IData) => {
+                <li key={i._id} onClick={() => d(i.name.uz)}>
+                  {i.name.uz}
+                </li>;
+              })}
           </ul>
         </section>
       ) : null}

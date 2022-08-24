@@ -1,3 +1,7 @@
+import { useNavigate } from "react-router-dom";
+import { myAxios } from "../service/axios/index";
+import { toast } from 'react-toastify';
+
 import {
   createContext,
   Dispatch,
@@ -6,8 +10,6 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { useNavigate } from "react-router-dom";
-import { myAxios } from "../service/axios/index";
 
 export const MyContext = createContext({});
 export interface IContext {
@@ -51,6 +53,7 @@ export interface IContext {
 export interface IRes {
   data: {
     code: number;
+    message:string;
     data: {
       password: string;
       phoneNumber: string;
@@ -115,7 +118,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // AGENDA REQUEST INTERFACE
   const [userAgenda, setUserAgenda] = useState<IPosit[]>([]);
   // AGENDA REQUEST INTERFACE
-  const [users, setusers] = useState<IPosit[]>([]);
+  const [users, setusers] = useState<IPosit[]>([])
   // LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -139,6 +142,8 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
       const res: IRes = await myAxios.post("/login", user);
       sucsess(res);
       navigate("/users");
+      
+      toast.success(res.data.message);
     } catch (error) {
       console.log(error);
       console.log("Ishlamadiii");
@@ -170,6 +175,8 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.delete("/position", { data: ids });
       getPosition();
+      
+      toast.success(res.data.message);
     } catch (error) {
       console.log("Delete Position ishlamadi !");
     }
@@ -181,6 +188,8 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.post("/position", name);
       getPosition();
+      
+      toast.success(res.data.message);
     } catch (error) {
       console.log("Post Position ishlamadi !");
     } finally {
@@ -193,6 +202,8 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.put("/position", user);
       getPosition();
+      
+      toast.success(res.data.message);
     } catch (error) {
       console.log("Put Position ishlamadi !");
     } finally {
@@ -208,6 +219,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.post("/field", name);
       getFeild();
+      toast.success(res.data.message);
     } catch (error) {
       console.log("Post Position ishlamadi !");
     } finally {
@@ -232,6 +244,8 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.delete("/field", { data: ids });
       getFeild();
+      
+      toast.success(res.data.message);
     } catch (error) {
       console.log("Delete  ishlamadi !");
     }
@@ -264,6 +278,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.delete("/agenda", { data: ids });
       getAgenda();
+      toast.success(res.data.message);
     } catch (error) {
       console.log("Delete Agenda ishlamadi !");
     }
@@ -275,6 +290,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.post("/agenda", name);
       getAgenda();
+      toast.success(res.data.message);
     } catch (error) {
       console.log("Agenda Agenda ishlamadi !");
     } finally {
@@ -288,11 +304,11 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     setLoading(true);
     try {
       const res = await myAxios("user?page=1&limit=10");
-      setusers(res.data.data);
+      setusers(res.data.data.data);
       console.log(res);
     } catch (error) {
-      throw error;
-    } finally {
+      throw error
+    }finally {
       setLoading(false);
     }
   }
@@ -300,8 +316,10 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   async function postUsers(body: any) {
     setLoading(true);
     try {
-      const res = await myAxios.post("/user", body);
+      const res = await myAxios.post("/user",body)
+      Getusers()
       console.log(res);
+      toast.success(res.data.message);
     } catch (error) {
       throw error;
     } finally {
@@ -310,10 +328,12 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   }
   // delete users
   async function usersDelete(ids: {}) {
+    
     setLoading(true);
     try {
-      const res = await myAxios.delete("user", {data: ids});
-      Getusers();
+      const res = await myAxios.delete("user",{data:ids})
+      Getusers()
+      toast.success(res.data.message);
     } catch (error) {
       throw error;
     } finally {
@@ -323,8 +343,11 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // git put
   async function usersPut(user: {}) {
     setLoading(true);
-    try {
-      const res = await myAxios.put("user", user);
+   
+    try { 
+      const res = await myAxios.put("user",user);
+      Getusers()
+      toast.success(res.data.message);
     } catch (error) {
       throw error;
     } finally {
@@ -355,6 +378,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         setLoading,
         Getusers,
         users,
+        postUsers,
         usersPut,
         usersDelete,
       }}

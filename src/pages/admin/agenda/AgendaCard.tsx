@@ -37,7 +37,7 @@ function AgendaCard() {
           setCheckStore((p) => [...p, i._id]);
         }
       });
-    } else {
+    } else {  
       setCheckStore([]);
     }
   }

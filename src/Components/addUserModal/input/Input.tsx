@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 interface IInput {
@@ -16,17 +16,17 @@ export default function Input({
   value,
   setName,
 }: IInput) {
-  
   function clearClicked() {
     if (setName) {
       name === "uz"
         ? setName((p: {}) => ({ ...p, uz: "" }))
         : name === "ru"
         ? setName((p: {}) => ({ ...p, ru: "" }))
+        : name === "EmployeeCount"
+        ? setName((p: {}) => ({ ...p, "Employee count": "" }))
         : setName((p: {}) => ({ ...p, en: "" }));
     }
   }
-
   return (
     <StyledInput>
       <div className="div">

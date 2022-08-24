@@ -18,8 +18,7 @@ import UsersCard from "./usersCard/UsersCard";
 import { UsersStyled } from "./UsersStyled";
 
 export const UsersMain: React.FC = () => {
-  const { Getusers, users, usersDelete, loading } =
-    useContext<IContext>(MyContext);
+  const { Getusers, users, usersDelete, loading } = useContext<any>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
 
@@ -125,7 +124,7 @@ export const UsersMain: React.FC = () => {
         {loading ? (
           <Loader />
         ) : (
-          users?.data?.map((i: any) => (
+          users?.map((i: any) => (
             <div className="map" key={i._id}>
               <div className="fullName">
                 <input

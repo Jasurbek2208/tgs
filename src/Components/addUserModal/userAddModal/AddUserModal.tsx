@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
+// Context
 import { IContext, MyContext } from "../../../context/Context";
 
-//
+// Components
 import Botton from "../botom/Botton";
 import Input from "../input/Input";
+import Secect from "../select/select2/Secect";
 
+// Interfaces
 export interface Field {
   id: number;
   name: string;
@@ -23,8 +26,10 @@ interface Adduser {
     };
   };
 }
+
 export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
-  const { postUsers, usersPut } = useContext<IContext>(MyContext);
+  // Context imports
+  const { postUsers, usersPut, userPosit, userField } = useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
     uz: "",
@@ -61,31 +66,52 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
     setName(user.name);
   }, []);
 
+  const options = [
+    {
+      id: 0,
+      name: "new",
+    },
+    {
+      id: 0,
+      name: "old",
+    },
+  ];
+
   return (
     <Styledapp>
       <form action="">
         <h1>{adduser ? "Add user" : "Edit user"}</h1>
+        <Secect options={options} />
         <Input
-          placeholder="Name in English * *"
+          placeholder="Full name *"
           onChange={onchange}
           name="uz"
           value={name.uz}
           setName={setName}
         />
         <Input
-          placeholder="Name in Russian * *"
+          placeholder="Phone number *"
           onChange={onchange}
           name="ru"
           value={name.ru}
           setName={setName}
         />
+        <Secect usersDate={userField} />
         <Input
-          placeholder="Name in Uzbek *"
+          placeholder="Brand"
           name="en"
           onChange={onchange}
           value={name.en}
           setName={setName}
         />
+        <Input
+          placeholder="Employee count"
+          name="EmployeeCount"
+          onChange={onchange}
+          value={name.en}
+          setName={setName}
+        />
+        <Secect usersDate={userPosit} />
         <div className="buton">
           <Botton pe={false} typee="button" onclik={() => save()}>
             Save
@@ -107,7 +133,7 @@ const Styledapp = styled.div`
   top: 0;
   right: 0;
   justify-content: flex-end;
-  
+
   form {
     .buton {
       display: flex;
