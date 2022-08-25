@@ -24,7 +24,7 @@ export default function Secect({
   }
 
   
-  function onclick({ id, name, placeholder }: any) {
+  function onclick( id: string, name: string ) {
     console.log(id, name, placeholder);
 
     setName((p: {}) => ({ ...p, [placeholder]: name }));
@@ -59,7 +59,7 @@ export default function Secect({
                     key={idx}
                     onClick={() => {
                       d(i.name.uz);
-                      onclick("ss", i.name.uz, placeholder);
+                      onclick("ss", i.name.uz);
                     }}
                   >
                     {i.name.uz}
