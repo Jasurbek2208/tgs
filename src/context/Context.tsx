@@ -303,7 +303,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
       getAgenda();
       // toast.success(res.data.message);
     } catch (error) {
-      console.log("Agenda Agenda ishlamadi !");
+      console.log("Post Agenda ishlamadi !");
     } finally {
       setLoading(false);
     }
@@ -380,6 +380,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         postFeild,
         getFeild,
         userField,
+        userAgenda,
         deleteFeild,
         postAgenda,
         getAgenda,
