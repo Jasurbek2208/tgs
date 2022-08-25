@@ -22,16 +22,16 @@ export interface IContext {
   postPosition?: Function;
   putPosition?: Function;
   deletePosition?: Function;
-  userPosit?: IPosit;
+  userPosit?: IPosit<IData>;
   setUserPosit?: Dispatch<SetStateAction<{}>>;
   // Field
   getFeild?: () => Promise<void>;
-  userField?: IPosit;
+  userField?: IPosit<IData>;
   postFeild?: Function;
   deleteFeild?: Function;
   PutFeild?: Function;
   // Agenda
-  userAgenda?: IPosit;
+  userAgenda?: IPosit<IData>;
   setUserAgenda?: Dispatch<SetStateAction<{}>>;
   getAgenda?: () => Promise<void>;
   postAgenda?: Function;
@@ -42,7 +42,7 @@ export interface IContext {
   setLoading?: Function;
   // users
   Getusers?: () => Promise<void>;
-  users?: IPosit;
+  users?: IPosit<IData>;
   postUsers?: Function;
   usersDelete?: Function;
   usersPut?: Function;
@@ -59,7 +59,7 @@ export interface IContext {
 export interface IRes {
   data: {
     code: number;
-    message:string;
+    message: string;
     data: {
       password: string;
       phoneNumber: string;
@@ -77,9 +77,9 @@ export interface IUser {
 }
 
 // Position interface
-export interface IPosit {
+export interface IPosit<T> {
   total: number;
-  data: IData[];
+  data: T[];
 }
 export interface IData {
   _id: string;
@@ -152,13 +152,14 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   });
 
   // POSITION REQUEST INTERFACE
-  const [userPosit, setUserPosit] = useState<IPosit[]>([]);
+  const [userPosit, setUserPosit] = useState<IPosit<[IData]>>({total : 0, data : []});
   // FIELD REQUEST INTERFACE
-  const [userField, setUserField] = useState<IPosit[]>([]);
+  const [userField, setUserField] = useState<IPosit<[IData]>>({total : 0, data : []});
   // AGENDA REQUEST INTERFACE
-  const [userAgenda, setUserAgenda] = useState<IPosit[]>([]);
+  const [userAgenda, setUserAgenda] = useState<IPosit<[IData]>>({total : 0, data : []});
   // AGENDA REQUEST INTERFACE
-  const [users, setusers] = useState<IPosit[]>([])
+  const [users, setusers] = useState<IPosit<IUsers>>({total : 0, data : []});
+  const [usersSpeaker, setusersSpeaker] = useState<IPosit<Speaker>>({total : 0, data : []});
   // LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -182,7 +183,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
       const res: IRes = await myAxios.post("/login", user);
       sucsess(res);
       navigate("/users");
-      
+
       // toast.success(res.data.message);
     } catch (error) {
       console.log(error);
@@ -194,7 +195,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // FIELD CRUD FUNCTIONS ======================
 
   // POSITION GET STATE SUCSESS SET
-  function sucsessPosit(res: IPosit[]) {
+  function sucsessPosit(res: IPosit<[IData]>) {
     setUserPosit(res);
   }
 
@@ -215,7 +216,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.delete("/position", { data: ids });
       getPosition();
-      
+
       // toast.success(res.data.message);
     } catch (error) {
       console.log("Delete Position ishlamadi !");
@@ -228,7 +229,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.post("/position", name);
       getPosition();
-      
+
       // toast.success(res.data.message);
     } catch (error) {
       console.log("Post Position ishlamadi !");
@@ -237,12 +238,12 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // PUT Position
-  async function putPosition(user:Object) {
+  async function putPosition(user: {}) {
     setLoading(true);
     try {
       const res = await myAxios.put("/position", user);
       getPosition();
-      
+
       // toast.success(res.data.message);
     } catch (error) {
       console.log("Put Position ishlamadi !");
@@ -259,6 +260,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.post("/field", name);
       getFeild();
+      console.log(res);
       // toast.success(res.data.message);
     } catch (error) {
       console.log("Post Position ishlamadi !");
@@ -284,30 +286,30 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     try {
       const res = await myAxios.delete("/field", { data: ids });
       getFeild();
-      
+
       // toast.success(res.data.message);
     } catch (error) {
       console.log("Delete  ishlamadi !");
     }
   }
   // Feild PUT
-  async function PutFeild(body:{}) {
+  async function PutFeild(body: {}) {
     try {
-      const res = await myAxios.put("/field",body);
+      const res = await myAxios.put("/field", body);
       // toast.success(res.data.message);
-      getFeild()
+      getFeild();
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  function sucsessField(res: IPosit[]) {
+  function sucsessField(res: IPosit<[IData]>) {
     setUserField(res);
   }
   // ===============================================
 
   // AGENDA GET STATE SUCSESS SET
-  function sucsessAgenda(res: IPosit[]) {
+  function sucsessAgenda(res:  IPosit<[IData]>) {
     setUserAgenda(res);
   }
 
@@ -356,8 +358,8 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
       const res = await myAxios("user?page=1&limit=10");
       setusers(res.data.data.data);
     } catch (error) {
-      throw error
-    }finally {
+      throw error;
+    } finally {
       setLoading(false);
     }
   }
@@ -377,11 +379,10 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   }
   // delete users
   async function usersDelete(ids: {}) {
-    
     setLoading(true);
     try {
-      const res = await myAxios.delete("user",{data:ids})
-      Getusers()
+      const res = await myAxios.delete("user", { data: ids });
+      Getusers();
       // toast.success(res.data.message);
     } catch (error) {
       throw error;
@@ -392,11 +393,62 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // git put
   async function usersPut(user: {}) {
     setLoading(true);
-   
-    try { 
-      const res = await myAxios.put("user",user);
-      Getusers()
+
+    try {
+      const res = await myAxios.put("user", user);
+      Getusers();
       // toast.success(res.data.message);
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+  /////////////////////////////////////////////////////
+  // get speaker
+  async function SpeakerGet() {
+    setLoading(true);
+    try {
+      const res = await myAxios.get("/speaker");
+      setusersSpeaker(res.data.data);
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+  // post speaker
+  async function SpeakerPost(body:{}) {
+    setLoading(true);
+    try {
+      const res = await myAxios.post("/speaker", body);
+      console.log(res);
+      SpeakerGet();
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+  // delete speaker
+  async function SpeakerDelete(ketmon:{}) {
+    setLoading(true);
+    try {
+      const res = await myAxios.delete("/speaker",{data:ketmon});
+      SpeakerGet();
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+  // put speaker
+  async function SpeakerPut() {
+    setLoading(true);
+    try {
+      const res = await myAxios.put("/speaker");
+      console.log(res);
+      SpeakerGet();
     } catch (error) {
       throw error;
     } finally {

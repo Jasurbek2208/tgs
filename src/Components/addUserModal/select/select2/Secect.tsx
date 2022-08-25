@@ -36,7 +36,7 @@ export default function Secect({
       <section
         className="select_heder"
         onClick={() => {
-          setassa((p) => !p);
+          setassa((p:any) => !p);
         }}
       >
         <div className="ch_heder">
