@@ -16,27 +16,45 @@ interface Adduser {
   set: Function;
 }
 export default function AddAgenda({ adduser, set }: Adduser) {
-  const { postPosition } = useContext<IContext>(MyContext);
+  const { postAgenda, userAgenda } = useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
-    uz: "",
-    ru: "",
-    en: "",
+    name: {
+      uz: "",
+      ru: "",
+      en: "",
+    },
+    type: "",
+    startTime: "",
+    endTime: "",
   });
 
   function onchange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setName((p) => ({ ...p, [name]: value }));
   }
+  function onchangeName(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setName((p: any) => ({
+      ...p,
+      name: { en: p.name.en, ru: p.name.ru, uz: p.name.uz, [name]: value },
+    }));
+  }
 
   function save() {
-    if (postPosition) {
-      postPosition({ name });
+    if (postAgenda) {
+      postAgenda({ name });
+      console.log(name);
     }
     setName({
-      uz: "",
-      ru: "",
-      en: "",
+      name: {
+        uz: "",
+        ru: "",
+        en: "",
+      },
+      type: "",
+      startTime: "",
+      endTime: "",
     });
     set(false);
   }
@@ -48,44 +66,44 @@ export default function AddAgenda({ adduser, set }: Adduser) {
         {/* <Secect options={}  /> */}
         <Input
           placeholder="Name in English * *"
-          onChange={onchange}
-          name="uz"
-          value={name.uz}
+          onChange={onchangeName}
+          name="en"
+          value={name.name.en}
           setName={setName}
         />
         <Input
           placeholder="Name in Russian * *"
-          onChange={onchange}
+          onChange={onchangeName}
           name="ru"
-          value={name.ru}
+          value={name.name.ru}
           setName={setName}
         />
         <Input
           placeholder="Name in Uzbek *"
-          name="en"
-          onChange={onchange}
-          value={name.en}
+          name="uz"
+          onChange={onchangeName}
+          value={name.name.uz}
           setName={setName}
         />
         <Input
           placeholder="Start time *"
-          name="en"
+          name="startTime"
           onChange={onchange}
-          value={name.en}
+          value={name.startTime}
           setName={setName}
         />
         <Input
           placeholder="End time *"
-          name="en"
+          name="endTime"
           onChange={onchange}
-          value={name.en}
+          value={name.endTime}
           setName={setName}
         />
         <Input
           placeholder="Speaker"
-          name="en"
+          name="type"
           onChange={onchange}
-          value={name.en}
+          value={name.type}
           setName={setName}
         />
         <div className="buton">

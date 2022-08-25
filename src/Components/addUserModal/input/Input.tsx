@@ -22,8 +22,12 @@ export default function Input({
         ? setName((p: {}) => ({ ...p, uz: "" }))
         : name === "ru"
         ? setName((p: {}) => ({ ...p, ru: "" }))
-        : name === "EmployeeCount"
-        ? setName((p: {}) => ({ ...p, "Employee count": "" }))
+        : name === "startTime"
+        ? setName((p: {}) => ({ ...p, startTime: "" }))
+        : name === "endTime"
+        ? setName((p: {}) => ({ ...p, endTime: "" }))
+        : name === "type"
+        ? setName((p: {}) => ({ ...p, type: "" }))
         : setName((p: {}) => ({ ...p, en: "" }));
     }
   }

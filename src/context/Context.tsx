@@ -308,7 +308,7 @@ const [usersSpeaker, setusersSpeaker] = useState<IPosit[]>([]);
       getAgenda();
       // toast.success(res.data.message);
     } catch (error) {
-      console.log("Agenda Agenda ishlamadi !");
+      console.log("Post Agenda ishlamadi !");
     } finally {
       setLoading(false);
     }
@@ -436,6 +436,7 @@ async function SpeakerPut(){
         postFeild,
         getFeild,
         userField,
+        userAgenda,
         deleteFeild,
         PutFeild,
         postAgenda,

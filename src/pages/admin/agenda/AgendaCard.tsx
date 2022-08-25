@@ -42,7 +42,7 @@ function AgendaCard() {
     }
   }
 
-  function deletePosit() {
+  function deleteAgend() {
     if (deleteAgenda) {
       deleteAgenda({ ids: checkStore });
     }
@@ -56,6 +56,8 @@ function AgendaCard() {
     }
   }, []);
 
+  
+
   return (
     <UsersStyled2>
       <UsersStyled>
@@ -66,7 +68,7 @@ function AgendaCard() {
             </div>
             <div className="icon--div">
               {checkStore.length > 0 ? (
-                <div className="icon icon-icon1" onClick={deletePosit}></div>
+                <div className="icon icon-icon1" onClick={deleteAgend}></div>
               ) : null}
               <div
                 className={
@@ -133,8 +135,7 @@ function AgendaCard() {
                 <p>{i?.endTime}</p>
               </div>
               <div>
-                {/*  ===================================== */}
-                {/* <p>{i?.}</p> */}
+                <p>{i?.name.ru}</p>
               </div>
               <div>
                 <p>{i?.name.uz}</p>
@@ -201,6 +202,9 @@ const UsersStyled2 = styled.div`
       p {
         margin: 0;
         color: #8992aa;
+          font-weight: 500;
+          font-size: 13px;
+          max-width: 60px;
       }
     }
   }
