@@ -46,6 +46,9 @@ export interface IContext {
   postUsers?: Function;
   usersDelete?: Function;
   usersPut?: Function;
+  // Speaker
+  SpeakerGet?:()=> Promise<void>;
+  usersSpeaker?:IPosit;
 }
 
 // Dispatch<SetStateAction<IState>>
@@ -119,7 +122,8 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // AGENDA REQUEST INTERFACE
   const [userAgenda, setUserAgenda] = useState<IPosit[]>([]);
   // AGENDA REQUEST INTERFACE
-  const [users, setusers] = useState<IPosit[]>([])
+  const [users, setusers] = useState<IPosit[]>([]);
+const [usersSpeaker, setusersSpeaker] = useState<IPosit[]>([]);
   // LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -365,7 +369,58 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
       setLoading(false);
     }
   }
-
+/////////////////////////////////////////////////////
+ // get speaker
+ async function SpeakerGet() {
+  setLoading(true)
+  try {
+    const res = await myAxios.get("/speaker");
+    console.log(res.data);
+    setusersSpeaker(res.data)
+  } catch (error) {
+    throw error
+  }finally{
+    setLoading(false);
+  }
+ }
+ // post speaker
+async function SpeakerPost() {
+  setLoading(true)
+  try {
+    const res = await myAxios.post("/speaker","body")
+    console.log(res);
+    SpeakerGet()
+  } catch (error) {
+    throw error
+  }finally{
+    setLoading(false)
+  }
+}
+// delete speaker
+async function SpeakerDelete() {
+  setLoading(true)
+  try {
+    const res  = await myAxios.delete("/speaker");
+    SpeakerGet()
+  } catch (error) {
+    throw error
+  }finally{
+    setLoading(false);
+  }
+}
+// put speaker
+async function SpeakerPut(){
+  setLoading(true)
+  try {
+    const res = await myAxios.put("/speaker");
+    console.log(res);
+    SpeakerGet()
+  } catch (error) {
+    throw error
+  }finally{
+    setLoading(false);
+  }
+}
   return (
     <MyContext.Provider
       value={{
@@ -382,6 +437,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         getFeild,
         userField,
         deleteFeild,
+        PutFeild,
         postAgenda,
         getAgenda,
         deleteAgenda,
@@ -392,7 +448,12 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         postUsers,
         usersPut,
         usersDelete,
-        PutFeild,
+        //speaker
+        SpeakerGet,
+        SpeakerPost,
+        SpeakerDelete,
+        SpeakerPut,
+        usersSpeaker,
       }}
     >
       {children}

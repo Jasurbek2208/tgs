@@ -70,7 +70,7 @@ export const UsersMain: React.FC = () => {
       <section className="user--card">
         <div className="first--div">
           <div className="tag--div">
-            <h2>4 Users selected</h2>
+            <h2>{checkStore.length} Users selected</h2>
           </div>
           <div className="icon--div">
             {checkStore.length > 0 ? (

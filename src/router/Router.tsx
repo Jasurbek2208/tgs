@@ -12,6 +12,7 @@ import Positions from "../pages/admin/positions/Positions";
 import Fields from "../pages/admin/fields/Fields";
 import Settings from "../pages/settings/Settings";
 import Agenda from "../pages/admin/agenda/Agenda";
+import Speaker from "../pages/admin/speaker/Speaker";
 
 export interface IAuth {
   auth?: {
@@ -26,7 +27,7 @@ export interface IAuth {
 export default function Router() {
   const isAuth = localStorage.getItem("ISAUTH") || false;
   const navigate = useNavigate();
-  
+
   return (
     <Routes>
       {!isAuth ? (
@@ -42,6 +43,7 @@ export default function Router() {
             <Route path="/positions" element={<Positions />} />
             <Route path="/agenda" element={<Agenda />} />
             <Route path="/settings" element={<Settings/>} />
+            <Route path="/speaker" element={<Speaker/>}/>
             <Route path="*" element={<Navigate to="users" />} />
           </Route>
         </>

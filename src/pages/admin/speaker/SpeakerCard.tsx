@@ -1,89 +1,34 @@
-import React, { useContext, useEffect, useState } from "react";
 
-// Styles
-import styled from "styled-components";
+import React,{useState,useContext,useEffect} from 'react'
+import styled from 'styled-components'
+import Loader from '../../../Components/Loader/Loader';
+import SearchInput from '../../../Components/searchinput/SerchInput';
 import { UsersStyled } from "../../../Components/usermain/UsersStyled";
-
-// Components
-import SearchInput from "../../../Components/searchinput/SerchInput";
-import AddUserModalPosition from "../../../Components/addUserModal/positionAddModal/AddUserModalPosition";
-
-// Context & interface
-import { IContext, IData, MyContext } from "../../../context/Context";
-
-// Loading
-import Loader from "../../../Components/Loader/Loader";
-
-function PositionCard() {
-  const { getPosition, deletePosition, userPosit, loading } =
-    useContext<IContext>(MyContext);
-  const [isopen, setisopen] = useState<boolean>(false);
-  const [checkStore, setCheckStore] = useState<string[]>([]);
-
-  const [curent, setCurent] = useState({
-    _id: "",
-    name: {
-      uz: "",
-      ru: "",
-      en: "",
-    },
-  });
-
-  // DELETE LOGICKASI....
-  function checkedClick(id: string) {
-    if (checkStore.includes(id)) {
-      setCheckStore((p) => p.filter((i) => i !== id));
-    } else {
-      setCheckStore((p) => [...p, id]);
-    }
-  }
-
-  function allChecked(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
-      userPosit?.data?.forEach((i: IData) => {
-        if (!checkStore.includes(i._id)) {
-          setCheckStore((p) => [...p, i._id]);
-        }
-      });
-    } else {
-      setCheckStore([]);
-    }
-  }
-
-  function deletePosit() {
-    if (deletePosition) {
-      deletePosition({ ids: checkStore });
-    }
-  }
-  // ========================================
-
-  // get
-  useEffect(() => {
-    if (getPosition) {
-      getPosition();
-    }
-  }, []);
-
+import { IContext, IData } from '../../../context/Context';
+import { MyContext } from '../../../context/Context';
+export default function SpeakerCard() {
+    const [checkStore, setCheckStore] = useState<string[]>([]);
+    const [isopen, setisopen] = useState<boolean>(false);
+    const {SpeakerGet,loading,usersSpeaker} = useContext<IContext>(MyContext);
+    
   return (
-    <UsersStyled2>
-      <UsersStyled>
+    <StyledSpeaker>
+        <UsersStyled>
         <section className="user--card">
           <div className="first--div">
             <div className="tag--div">
-              <h2>{checkStore.length} Users selected</h2>
+              <h2>{checkStore.length} Tickets selected</h2>
             </div>
             <div className="icon--div">
               {checkStore.length > 0 ? (
-                <div className="icon icon-icon1" onClick={deletePosit}></div>
+                <div className="icon icon-icon1"></div>
               ) : null}
               <div
                 className={
                   "icon " +
                   (checkStore.length === 1 ? "icon-icon2" : "icon-addUser")
                 }
-                onClick={() => {
-                  setisopen(true);
-                }}
+                onClick={() => setisopen(true)}
               ></div>
               <div className="icon icon-icon3"></div>
               <div className="icon icon-icon4"></div>
@@ -96,7 +41,7 @@ function PositionCard() {
           <div className="end--div">
             <div className="user-information">
               <div className="expand">
-                <input type="checkbox" onChange={allChecked} />
+                <input type="checkbox"/>
                 <p>Full name</p>
               </div>
             </div>
@@ -105,25 +50,18 @@ function PositionCard() {
         {loading ? (
           <Loader />
         ) : (
-          userPosit?.data?.map((i: any, idx: number) => (
+          usersSpeaker?.data?.map((i: IData, idx: number) => (
             <div className="map" key={idx}>
               <div className="fullName">
                 <input
                   type="checkbox"
                   checked={checkStore.includes(i._id)}
-                  onChange={() => {
-                    checkedClick(i._id);
-                    setCurent(i);
-                  }}
                 />
                 <p
                   onClick={() => {
                     setisopen(true);
-                    setCurent(i);
                   }}
-                >
-                  {i?.name.uz}
-                </p>
+                >{i?.name.uz}</p>
               </div>
               <div className="date">
                 <p>{i?.__v}</p>
@@ -137,23 +75,12 @@ function PositionCard() {
             </div>
           ))
         )}
-      </UsersStyled>
-
-      {isopen ? (
-        <AddUserModalPosition
-          adduser={checkStore.length === 1 ? false : true}
-          set={setisopen}
-          user={curent}
-        />
-      ) : null}
-    </UsersStyled2>
-  );
+        </UsersStyled>
+    </StyledSpeaker>
+  )
 }
-
-export default PositionCard;
-
-const UsersStyled2 = styled.div`
-  .map {
+const StyledSpeaker = styled.div`
+    .map {
     padding: 13px 18px;
     display: flex;
     align-items: center;
@@ -196,5 +123,4 @@ const UsersStyled2 = styled.div`
         color: #8992aa;
       }
     }
-  }
-`;
+  }`

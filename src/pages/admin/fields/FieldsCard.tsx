@@ -15,8 +15,7 @@ import { IContext, IData, MyContext } from "../../../context/Context";
 import Loader from "../../../Components/Loader/Loader";
 
 function FieldsCard() {
-  const { getFeild, userField, deleteFeild, loading,} =
-    useContext<IContext>(MyContext);
+  const { getFeild, userField, deleteFeild, loading,} = useContext<IContext>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
 
   const [checkStore, setCheckStore] = useState<string[]>([]);
@@ -67,7 +66,7 @@ const [current, setcurrent] = useState({
         <section className="user--card">
           <div className="first--div">
             <div className="tag--div">
-              <h2>4 Tickets selected</h2>
+              <h2>{checkStore.length} Tickets selected</h2>
             </div>
             <div className="icon--div">
               {checkStore.length > 0 ? (
