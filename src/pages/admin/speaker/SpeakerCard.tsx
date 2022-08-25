@@ -42,7 +42,7 @@ export default function SpeakerCard() {
   }
   function Delete(){
     if(SpeakerDelete){
-    SpeakerDelete({checkStore});
+    SpeakerDelete({ids:checkStore});
     }
   }
 

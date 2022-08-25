@@ -431,10 +431,10 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // delete speaker
-  async function SpeakerDelete(user:{}) {
+  async function SpeakerDelete(ketmon:{}) {
     setLoading(true);
     try {
-      const res = await myAxios.delete("/speaker",user);
+      const res = await myAxios.delete("/speaker",{data:ketmon});
       SpeakerGet();
     } catch (error) {
       throw error;
