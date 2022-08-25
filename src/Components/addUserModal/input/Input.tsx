@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface IInput {
   placeholder: string;
   onChange?: any;
-  name?: string;
+  name: string;
   value?: string;
   setName?: React.Dispatch<any>;
 }
@@ -16,19 +16,11 @@ export default function Input({
   value,
   setName,
 }: IInput) {
-  function clearClicked() {
+  function clearClicked(name: string) {
     if (setName) {
-      name === "uz"
-        ? setName((p: {}) => ({ ...p, uz: "" }))
-        : name === "ru"
-        ? setName((p: {}) => ({ ...p, ru: "" }))
-        : name === "startTime"
-        ? setName((p: {}) => ({ ...p, startTime: "" }))
-        : name === "endTime"
-        ? setName((p: {}) => ({ ...p, endTime: "" }))
-        : name === "type"
-        ? setName((p: {}) => ({ ...p, type: "" }))
-        : setName((p: {}) => ({ ...p, en: "" }));
+      setName((p: {}) => ({ ...p, [name]: "" }));
+      
+      // setName((p: {}) => console.log(p));
     }
   }
   return (
@@ -41,7 +33,7 @@ export default function Input({
           name={name}
           value={value}
         />
-        <div className="icon close" onClick={clearClicked}></div>
+        <div className="icon close" onClick={() => clearClicked(name)}></div>
       </div>
     </StyledInput>
   );

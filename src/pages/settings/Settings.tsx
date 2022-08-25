@@ -8,14 +8,14 @@ export default function Settings() {
     <StyledSettings>
       <main>
         <section>
-          <Input placeholder="Youtube link in English*" />
-          <Input placeholder="Youtube in Russian *" />
-          <Input placeholder="Youtube in Uzbek *" />
+          <Input name="" value="" placeholder="Youtube link in English*" />
+          <Input name="" value="" placeholder="Youtube in Russian *" />
+          <Input name="" value="" placeholder="Youtube in Uzbek *" />
         </section>
         <section>
-          <Input placeholder="Local in English*" />
-          <Input placeholder="Local in Russian *" />
-          <Input placeholder="Local in Uzbek *" />
+          <Input name="" value="" placeholder="Local in English*" />
+          <Input name="" value="" placeholder="Local in Russian *" />
+          <Input name="" value="" placeholder="Local in Uzbek *" />
           <div className="botom_settings">
             <Botton typee="button">Save</Botton>
             <Botton typee="button" pe={true}>Cancel</Botton>

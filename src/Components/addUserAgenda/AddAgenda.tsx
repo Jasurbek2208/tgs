@@ -59,20 +59,35 @@ export default function AddAgenda({ adduser, set }: Adduser) {
     set(false);
   }
 
+  const options: {}[] = [
+    {
+      id: 0,
+      name: "Speaker",
+    },
+    {
+      id: 0,
+      name: "Activity",
+    },
+  ];
+
+  function onclick({i, placeholder}: any) {
+    setName((p) => ({ ...p, [placeholder]: i.name, speakerId : i._id }));
+  }
+
   return (
     <Styledapp>
       <form action="">
         <h1>{adduser ? "Add activity" : "Edit activity"}</h1>
-        {/* <Secect options={}  /> */}
+        <Secect placeholder="type" options={options} onclick={onclick} />
         <Input
-          placeholder="Name in English * *"
+          placeholder="Name in English *"
           onChange={onchangeName}
           name="en"
           value={name.name.en}
           setName={setName}
         />
         <Input
-          placeholder="Name in Russian * *"
+          placeholder="Name in Russian *"
           onChange={onchangeName}
           name="ru"
           value={name.name.ru}
@@ -99,13 +114,7 @@ export default function AddAgenda({ adduser, set }: Adduser) {
           value={name.endTime}
           setName={setName}
         />
-        <Input
-          placeholder="Speaker"
-          name="type"
-          onChange={onchange}
-          value={name.type}
-          setName={setName}
-        />
+        <Secect placeholder="Speaker" options={options} />
         <div className="buton">
           <Botton pe={false} typee="button" onclik={() => save()}>
             Save

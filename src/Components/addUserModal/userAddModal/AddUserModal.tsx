@@ -17,14 +17,7 @@ export interface Field {
 interface Adduser {
   adduser: boolean;
   set: Function;
-  user?: {
-    _id: string;
-    name: {
-      uz: string;
-      ru: string;
-      en: string;
-    };
-  };
+  user?: any;
 }
 
 export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
@@ -33,9 +26,12 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
     useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
-    uz: "",
-    ru: "",
-    en: "",
+    fullName: "",
+    phoneNumber: "",
+    fieldId: "",
+    brand: "",
+    employeeCount: "",
+    positionId: "",
   });
 
   function onchange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -55,9 +51,12 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
       }
     }
     setName({
-      uz: "",
-      ru: "",
-      en: "",
+      fullName: "",
+      phoneNumber: "",
+      fieldId: "",
+      brand: "",
+      employeeCount: "",
+      positionId: "",
     });
     set(false);
   }
@@ -66,7 +65,7 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
     if (getPosition) getPosition();
     if (getFeild) getFeild();
     if (!user?._id) return;
-    setName(user.name);
+    setName(user);
   }, []);
 
   const options = [
@@ -80,41 +79,46 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
     },
   ];
 
+
   return (
     <Styledapp>
       <form action="">
         <h1>{adduser ? "Add user" : "Edit user"}</h1>
-        <Secect options={options} />
+        <Secect placeholder="Speaker" options={options} />
         <Input
           placeholder="Full name *"
           onChange={onchange}
-          name="uz"
-          value={name.uz}
+          name="fullName"
+          value={name.fullName}
           setName={setName}
         />
         <Input
           placeholder="Phone number *"
           onChange={onchange}
-          name="ru"
-          value={name.ru}
+          name="phoneNumber"
+          value={name.phoneNumber}
           setName={setName}
         />
-        <Secect usersDate={userField} />
+        <Secect placeholder="Fields" usersDate={userField} setName={setName} />
         <Input
           placeholder="Brand"
-          name="en"
+          name="brand"
           onChange={onchange}
-          value={name.en}
+          value={name.brand}
           setName={setName}
         />
         <Input
           placeholder="Employee count"
-          name="EmployeeCount"
+          name="employeeCount"
           onChange={onchange}
-          value={name.en}
+          value={name.employeeCount}
           setName={setName}
         />
-        <Secect usersDate={userPosit} />
+        <Secect
+          placeholder="Positions"
+          usersDate={userPosit}
+          setName={setName}
+        />
         <div className="buton">
           <Botton pe={false} typee="button" onclik={() => save()}>
             Save

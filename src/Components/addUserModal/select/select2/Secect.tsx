@@ -6,11 +6,15 @@ import { Field } from "../../userAddModal/AddUserModal";
 export interface SecectProps {
   options?: any;
   usersDate?: any;
+  placeholder?: string;
+  setName?: any;
 }
 
 export default function Secect({
   options = undefined,
   usersDate,
+  placeholder,
+  setName,
 }: SecectProps) {
   const [assa, setassa] = useState(false);
   const [value, setvalue] = useState("");
@@ -18,11 +22,15 @@ export default function Secect({
     setvalue(name);
     setassa(false);
   }
-  useEffect(() => {
-    console.log(options);
-  }, []);
 
-  console.log(usersDate);
+  
+  function onclick({ id, name, placeholder }: any) {
+    console.log(id, name, placeholder);
+
+    setName((p: {}) => ({ ...p, [placeholder]: name }));
+    if (placeholder === "Fields") setName((p: {}) => ({ ...p, fieldId: id }));
+    if (placeholder === "Positions") setName((p: {}) => ({ ...p, positionId: id }));
+  }
 
   return (
     <SelectStyled>
@@ -33,7 +41,7 @@ export default function Secect({
         }}
       >
         <div className="ch_heder">
-          <p>{value || "tanlang"}</p>
+          <p>{value || placeholder || "tanlang"}</p>
           <i className="icon ccc"></i>
         </div>
       </section>
@@ -41,13 +49,19 @@ export default function Secect({
         <section className="select_list">
           <ul>
             {options
-              ? options.map((i: any) => (
-                  <li key={i.id} onClick={() => d(i.name)}>
+              ? options.map((i: any, idx: number) => (
+                  <li key={idx} onClick={() => d(i.name)}>
                     {i.name}
                   </li>
                 ))
-              : usersDate?.data?.map((i: IData) => (
-                  <li key={i._id} onClick={() => d(i.name.uz)}>
+              : usersDate?.data?.map((i: IData, idx: number) => (
+                  <li
+                    key={idx}
+                    onClick={() => {
+                      d(i.name.uz);
+                      onclick("ss", i.name.uz, placeholder);
+                    }}
+                  >
                     {i.name.uz}
                   </li>
                 ))}

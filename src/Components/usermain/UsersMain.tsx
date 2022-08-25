@@ -14,7 +14,6 @@ import {
 import AddUserModal from "../addUserModal/userAddModal/AddUserModal";
 import Loader from "../Loader/Loader";
 import SearchInput from "../searchinput/SerchInput";
-import UsersCard from "./usersCard/UsersCard";
 import { UsersStyled } from "./UsersStyled";
 
 export const UsersMain: React.FC = () => {
@@ -23,12 +22,12 @@ export const UsersMain: React.FC = () => {
   const [checkStore, setCheckStore] = useState<string[]>([]);
 
   const [curent, setCurent] = useState({
-    _id: "",
-    name: {
-      uz: "",
-      ru: "",
-      en: "",
-    },
+    fullName: "",
+    phoneNumber: "",
+    fieldId: "",
+    brand: "",
+    employeeCount: "",
+    positionId: "",
   });
 
   // DELETE LOGICKASI....
@@ -132,13 +131,13 @@ export const UsersMain: React.FC = () => {
                   checked={checkStore.includes(i?._id)}
                   onChange={() => {
                     checkedClick(i?._id);
-                    setCurent(i);
+                    setCurent((p) => ({ ...p, i }));
                   }}
                 />
                 <p
                   onClick={() => {
                     setisopen(true);
-                    setCurent(i);
+                    setCurent((p) => ({ ...p, i }));
                   }}
                 >
                   {i?.fullName}
