@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IData, IPosit } from "../../../../context/Context";
-import { Field } from "../../userAddModal/AddUserModal";
+import { Field } from "../../../MODAL/userAddModal/AddUserModal";
 
 export interface SecectProps {
   options?: any;

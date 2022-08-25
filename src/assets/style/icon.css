@@ -139,3 +139,10 @@
   mask-image: url("../icon/close.svg");
   -webkit-mask-image: url("../icon/close.svg");
 }
+.icon.speaker{
+  min-width: 18px;
+  min-height: 20px;
+  background-color: #8992a9;
+  mask-image: url("../icon/speaker.svg");
+  -webkit-mask-image: url("../icon/speaker.svg");
+}

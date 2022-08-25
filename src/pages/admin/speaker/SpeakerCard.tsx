@@ -1,19 +1,54 @@
-
-import React,{useState,useContext,useEffect} from 'react'
-import styled from 'styled-components'
-import Loader from '../../../Components/Loader/Loader';
-import SearchInput from '../../../Components/searchinput/SerchInput';
+import React, { useState, useContext, useEffect } from "react";
+import styled from "styled-components";
+import Loader from "../../../Components/Loader/Loader";
+import SpeakerModal from "../../../Components/MODAL/ModalSpeaker/SpeakerModal";
+import SearchInput from "../../../Components/searchinput/SerchInput";
 import { UsersStyled } from "../../../Components/usermain/UsersStyled";
-import { IContext, IData } from '../../../context/Context';
-import { MyContext } from '../../../context/Context';
+import { IContext, S } from "../../../context/Context";
+import { MyContext } from "../../../context/Context";
+import { Speaker } from "../../../context/Context";
+
 export default function SpeakerCard() {
-    const [checkStore, setCheckStore] = useState<string[]>([]);
-    const [isopen, setisopen] = useState<boolean>(false);
-    const {SpeakerGet,loading,usersSpeaker} = useContext<IContext>(MyContext);
-    
+  const [checkStore, setCheckStore] = useState<string[]>([]);
+  const [isopen, setisopen] = useState<boolean>(false);
+  const { SpeakerGet, loading, usersSpeaker,SpeakerDelete } = useContext<IContext>(MyContext);
+  console.log(usersSpeaker);
+  
+
+  function allChecked(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      usersSpeaker?.data.forEach((i: any) => {
+        if (!checkStore.includes(i._id)) {
+          setCheckStore((p) => [...p, i._id]);
+        }
+      });
+      console.log(usersSpeaker);
+    } else {
+      setCheckStore([]);
+    }
+  }
+  useEffect(() => {
+    if (SpeakerGet) {
+      SpeakerGet();
+    }
+  }, []);
+
+  function checkedClick(id: string) {
+    if (checkStore.includes(id)) {
+      setCheckStore((p) => p.filter((i) => i !== id));
+    } else {
+      setCheckStore((p) => [...p, id]);
+    }
+  }
+  function Delete(){
+    if(SpeakerDelete){
+    SpeakerDelete({checkStore});
+    }
+  }
+
   return (
     <StyledSpeaker>
-        <UsersStyled>
+      <UsersStyled>
         <section className="user--card">
           <div className="first--div">
             <div className="tag--div">
@@ -21,7 +56,7 @@ export default function SpeakerCard() {
             </div>
             <div className="icon--div">
               {checkStore.length > 0 ? (
-                <div className="icon icon-icon1"></div>
+                <div className="icon icon-icon1" onClick={()=>Delete()}></div>
               ) : null}
               <div
                 className={
@@ -41,7 +76,7 @@ export default function SpeakerCard() {
           <div className="end--div">
             <div className="user-information">
               <div className="expand">
-                <input type="checkbox"/>
+                <input type="checkbox" onChange={allChecked} />
                 <p>Full name</p>
               </div>
             </div>
@@ -50,18 +85,23 @@ export default function SpeakerCard() {
         {loading ? (
           <Loader />
         ) : (
-          usersSpeaker?.data?.map((i: IData, idx: number) => (
+          usersSpeaker?.data.map((i: S, idx: number) => (
             <div className="map" key={idx}>
               <div className="fullName">
                 <input
                   type="checkbox"
                   checked={checkStore.includes(i._id)}
+                  onChange={() => {
+                    checkedClick(i._id);
+                  }}
                 />
                 <p
                   onClick={() => {
                     setisopen(true);
                   }}
-                >{i?.name.uz}</p>
+                >
+                  {i?.name.en}
+                </p>
               </div>
               <div className="date">
                 <p>{i?.__v}</p>
@@ -70,17 +110,32 @@ export default function SpeakerCard() {
                 <p>{i?.name.ru}</p>
               </div>
               <div className="brand">
-                <p>{i?.name.en}</p>
+                <p>{i?.name.uz}</p>
+              </div>
+              <div className="brand">
+                <p>{i?.bio?.en}</p>
+              </div>
+              <div className="brand">
+                <p>{i?.bio?.ru}</p>
+              </div>
+              <div className="brand">
+                <p>{i?.bio?.uz}</p>
               </div>
             </div>
           ))
         )}
-        </UsersStyled>
+        {isopen ? (
+          <SpeakerModal
+            set={setisopen}
+            adduser={checkStore.length === 1 ? false : true}
+          />
+        ) : null}
+      </UsersStyled>
     </StyledSpeaker>
-  )
+  );
 }
 const StyledSpeaker = styled.div`
-    .map {
+  .map {
     padding: 13px 18px;
     display: flex;
     align-items: center;
@@ -123,4 +178,5 @@ const StyledSpeaker = styled.div`
         color: #8992aa;
       }
     }
-  }`
+  }
+`;

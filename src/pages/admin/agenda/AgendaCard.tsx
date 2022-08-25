@@ -6,14 +6,14 @@ import { UsersStyled } from "../../../Components/usermain/UsersStyled";
 
 // Components
 import SearchInput from "../../../Components/searchinput/SerchInput";
-import AddUserModalPosition from "../../../Components/addUserModal/positionAddModal/AddUserModalPosition";
+import AddUserModalPosition from "../../../Components/MODAL/positionAddModal/AddUserModalPosition";
 
 // Context & interface
 import { IContext, IData, MyContext } from "../../../context/Context";
 
 // Loading
 import Loader from "../../../Components/Loader/Loader";
-import AddAgenda from "../../../Components/addUserAgenda/AddAgenda";
+import AddAgenda from "../../../Components/MODAL/addUserAgenda/AddAgenda";
 
 function AgendaCard() {
   const { getAgenda, deleteAgenda, userAgenda, loading } =

@@ -6,7 +6,7 @@ import { UsersStyled } from "../../../Components/usermain/UsersStyled";
 
 // Components
 import SearchInput from "../../../Components/searchinput/SerchInput";
-import AddUserModalPosition from "../../../Components/addUserModal/positionAddModal/AddUserModalPosition";
+import AddUserModalPosition from "../../../Components/MODAL/positionAddModal/AddUserModalPosition";
 
 // Context & interface
 import { IContext, IData, MyContext } from "../../../context/Context";

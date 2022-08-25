@@ -11,7 +11,7 @@ import {
 } from "../../context/Context";
 
 //
-import AddUserModal from "../addUserModal/userAddModal/AddUserModal";
+import AddUserModal from "../MODAL/userAddModal/AddUserModal";
 import Loader from "../Loader/Loader";
 import SearchInput from "../searchinput/SerchInput";
 import UsersCard from "./usersCard/UsersCard";

@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
 
-import { IContext, MyContext } from "../../context/Context";
+import { IContext, MyContext } from "../../../context/Context";
 
-import Botton from "../addUserModal/botom/Botton";
-import Input from "../addUserModal/input/Input";
-import Secect from "../addUserModal/select/select2/Secect";
+import Botton from "../../addUserModal/botom/Botton";
+import Input from "../../addUserModal/input/Input";
+import Secect from "../../addUserModal/select/select2/Secect";
 
 export interface Field {
   id: number;

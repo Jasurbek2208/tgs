@@ -17,8 +17,9 @@ export default function Navbar() {
               : location === "/agenda"
               ? "Agenda"
               : location === "/settings"
-              ? "Settings"
-              : "Users"}
+              ? "Settings":
+              location === "/speaker"? "Speaker":
+            "Users"}
           </h1>
         </div>
         <div className="icon--div">
