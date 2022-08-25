@@ -43,8 +43,7 @@ export default function AddAgenda({ adduser, set }: Adduser) {
 
   function save() {
     if (postAgenda) {
-      postAgenda({ name });
-      console.log(name);
+      postAgenda( name );
     }
     setName({
       name: {
@@ -78,7 +77,7 @@ export default function AddAgenda({ adduser, set }: Adduser) {
     <Styledapp>
       <form action="">
         <h1>{adduser ? "Add activity" : "Edit activity"}</h1>
-        <Secect placeholder="type" options={options} onclick={onclick} />
+        <Secect placeholder="type" options={options} />
         <Input
           placeholder="Name in English *"
           onChange={onchangeName}

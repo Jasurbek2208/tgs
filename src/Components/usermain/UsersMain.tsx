@@ -64,6 +64,19 @@ export const UsersMain: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (checkStore.length === 0) {
+      setCurent({
+        fullName: "",
+        phoneNumber: "",
+        fieldId: "",
+        brand: "",
+        employeeCount: "",
+        positionId: "",
+      });
+    }
+  }, [checkStore]);
+
   return (
     <UsersStyled>
       <section className="user--card">
@@ -128,16 +141,16 @@ export const UsersMain: React.FC = () => {
               <div className="fullName">
                 <input
                   type="checkbox"
-                  checked={checkStore.includes(i?._id)}
+                  checked={checkStore.includes(i._id)}
                   onChange={() => {
-                    checkedClick(i?._id);
-                    setCurent((p) => ({ ...p, i }));
+                    checkedClick(i._id);
+                    setCurent(i);
                   }}
                 />
                 <p
                   onClick={() => {
                     setisopen(true);
-                    setCurent((p) => ({ ...p, i }));
+                    setCurent(i);
                   }}
                 >
                   {i?.fullName}

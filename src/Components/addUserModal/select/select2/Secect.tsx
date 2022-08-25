@@ -27,7 +27,6 @@ export default function Secect({
   function onclick( id: string, name: string ) {
     console.log(id, name, placeholder);
 
-    setName((p: {}) => ({ ...p, [placeholder]: name }));
     if (placeholder === "Fields") setName((p: {}) => ({ ...p, fieldId: id }));
     if (placeholder === "Positions") setName((p: {}) => ({ ...p, positionId: id }));
   }
@@ -59,7 +58,7 @@ export default function Secect({
                     key={idx}
                     onClick={() => {
                       d(i.name.uz);
-                      onclick("ss", i.name.uz);
+                      onclick(i._id, i.name.uz);
                     }}
                   >
                     {i.name.uz}

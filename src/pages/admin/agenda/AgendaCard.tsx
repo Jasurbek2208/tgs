@@ -37,7 +37,7 @@ function AgendaCard() {
           setCheckStore((p) => [...p, i._id]);
         }
       });
-    } else {  
+    } else {
       setCheckStore([]);
     }
   }
@@ -55,8 +55,6 @@ function AgendaCard() {
       getAgenda();
     }
   }, []);
-
-  
 
   return (
     <UsersStyled2>
@@ -202,9 +200,9 @@ const UsersStyled2 = styled.div`
       p {
         margin: 0;
         color: #8992aa;
-          font-weight: 500;
-          font-size: 13px;
-          max-width: 60px;
+        font-weight: 500;
+        font-size: 13px;
+        max-width: 60px;
       }
     }
   }

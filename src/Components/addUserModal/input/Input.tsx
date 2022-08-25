@@ -3,10 +3,12 @@ import styled from "styled-components";
 
 interface IInput {
   placeholder: string;
+  type?: string;
   onChange?: any;
   name: string;
-  value?: string;
+  value?: string | number;
   setName?: React.Dispatch<any>;
+  noClear?: boolean;
 }
 
 export default function Input({
@@ -15,11 +17,12 @@ export default function Input({
   name,
   value,
   setName,
+  type = "text",
+  noClear,
 }: IInput) {
   function clearClicked(name: string) {
     if (setName) {
       setName((p: {}) => ({ ...p, [name]: "" }));
-      
       // setName((p: {}) => console.log(p));
     }
   }
@@ -27,13 +30,15 @@ export default function Input({
     <StyledInput>
       <div className="div">
         <input
-          type="text"
+          type={type}
           placeholder={placeholder}
           onChange={onChange}
           name={name}
           value={value}
         />
-        <div className="icon close" onClick={() => clearClicked(name)}></div>
+        {noClear ? null : (
+          <div className="icon close" onClick={() => clearClicked(name)}></div>
+        )}
       </div>
     </StyledInput>
   );

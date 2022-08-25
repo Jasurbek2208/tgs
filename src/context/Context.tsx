@@ -326,14 +326,14 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   async function postUsers(body: any) {
     setLoading(true);
     try {
-      const res = await myAxios.post("/user")
+      const res = await myAxios.post("/user", body)
       Getusers()
       console.log(res);
       // toast.success(res.data.message);
     } catch (error) {
       throw error;
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   }
   // delete users

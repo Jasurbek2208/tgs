@@ -30,7 +30,7 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
     phoneNumber: "",
     fieldId: "",
     brand: "",
-    employeeCount: "",
+    employeeCount: 1,
     positionId: "",
   });
 
@@ -38,24 +38,25 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
     const { name, value } = e.target;
     setName((p) => ({ ...p, [name]: value }));
   }
-
+  console.log(name);
   function save() {
-    if (user?.name?.uz === "") {
-      if (postUsers) {
-        postUsers({ name });
-      }
-    } else {
-      const _id = user?._id;
-      if (usersPut) {
-        usersPut({ _id, name });
-      }
+    if (postUsers) {
+      let count = Number(name.employeeCount);
+      console.log(typeof count, count);
+
+      setName((p) => ({ ...p, employeeCount: count }));
+      postUsers(name);
     }
+    // const _id = user?._id;
+    // if (usersPut) {
+    //   usersPut({ _id, name });
+    // }
     setName({
       fullName: "",
       phoneNumber: "",
       fieldId: "",
       brand: "",
-      employeeCount: "",
+      employeeCount: 1,
       positionId: "",
     });
     set(false);
@@ -68,23 +69,10 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
     setName(user);
   }, []);
 
-  const options = [
-    {
-      id: 0,
-      name: "new",
-    },
-    {
-      id: 0,
-      name: "old",
-    },
-  ];
-
-
   return (
     <Styledapp>
       <form action="">
         <h1>{adduser ? "Add user" : "Edit user"}</h1>
-        <Secect placeholder="Speaker" options={options} />
         <Input
           placeholder="Full name *"
           onChange={onchange}

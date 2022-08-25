@@ -64,6 +64,19 @@ function PositionCard() {
     }
   }, []);
 
+  useEffect(() => {
+    if (checkStore.length === 0) {
+      setCurent({
+        _id: "",
+        name: {
+          uz: "",
+          ru: "",
+          en: "",
+        },
+      });
+    }
+  }, [checkStore]);
+
   return (
     <UsersStyled2>
       <UsersStyled>
