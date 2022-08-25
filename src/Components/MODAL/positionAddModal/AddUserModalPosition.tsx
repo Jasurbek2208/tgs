@@ -1,15 +1,16 @@
-import React, { useContext, useState,useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+
 import { IContext, MyContext } from "../../../context/Context";
 
-import Botton from "../botom/Botton";
-import Input from "../input/Input";
+import Botton from "../../addUserModal/botom/Botton";
+import Input from "../../addUserModal/input/Input";
 
 export interface Field {
   id: number;
   name: string;
 }
-interface Fields {
+interface Adduser {
   adduser: boolean;
   set: Function;
   user?: {
@@ -21,13 +22,13 @@ interface Fields {
     }
   };
 }
-export default function Feild({ adduser, set,user }: Fields): JSX.Element {
-  const { postFeild, PutFeild  } = useContext<IContext>(MyContext);
-  useEffect(() => {
-    if(!user?._id) return
-    setName(user.name);
-  }, []);
-  
+export default function AddUserModalPosition({
+  adduser,
+  set,
+  user,
+}: Adduser) {
+  const { postPosition, putPosition } = useContext<IContext>(MyContext);
+
   const [name, setName] = useState({
     uz: "",
     ru: "",
@@ -41,16 +42,15 @@ export default function Feild({ adduser, set,user }: Fields): JSX.Element {
 
   function save() {
     if (user?.name?.uz === "") {
-      if (postFeild) {
-        postFeild({ name });
+      if (postPosition) {
+        postPosition({ name });
       }
     } else {
-      let _id = user?._id;
-      if (PutFeild) {
-        PutFeild({_id, name});
+      const _id = user?._id;
+      if (putPosition) {
+        putPosition({_id, name});
       } 
     }
-
     setName({
       uz: "",
       ru: "",
@@ -59,19 +59,24 @@ export default function Feild({ adduser, set,user }: Fields): JSX.Element {
     set(false);
   }
 
+  useEffect(() => {
+    if (!user?._id) return;
+    setName(user.name);
+  }, []);
+
   return (
     <Styledapp>
-      <form>
-        <h1>{adduser ? "Add field" : "Edit field"}</h1>
+      <form action="">
+        <h1>{adduser ? "Add position" : "Edit position"}</h1>
         <Input
-          placeholder="Name in English *"
+          placeholder="Name in English * *"
           onChange={onchange}
           name="uz"
           value={name.uz}
           setName={setName}
         />
         <Input
-          placeholder="Name in Russian *"
+          placeholder="Name in Russian * *"
           onChange={onchange}
           name="ru"
           value={name.ru}
@@ -79,8 +84,8 @@ export default function Feild({ adduser, set,user }: Fields): JSX.Element {
         />
         <Input
           placeholder="Name in Uzbek *"
-          onChange={onchange}
           name="en"
+          onChange={onchange}
           value={name.en}
           setName={setName}
         />
@@ -101,11 +106,10 @@ const Styledapp = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   justify-content: flex-end;
-
   form {
     .buton {
       display: flex;
@@ -113,13 +117,12 @@ const Styledapp = styled.div`
       align-items: center;
     }
     padding: 33px 23px;
-    background: #fff;
+    background: #ffffff;
     box-shadow: -3px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-
     h1 {
       font-family: "Lato";
       font-style: normal;

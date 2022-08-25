@@ -11,7 +11,7 @@ import {
 } from "../../context/Context";
 
 //
-import AddUserModal from "../addUserModal/userAddModal/AddUserModal";
+import AddUserModal from "../MODAL/userAddModal/AddUserModal";
 import Loader from "../Loader/Loader";
 import SearchInput from "../searchinput/SerchInput";
 import { UsersStyled } from "./UsersStyled";
@@ -82,7 +82,7 @@ export const UsersMain: React.FC = () => {
       <section className="user--card">
         <div className="first--div">
           <div className="tag--div">
-            <h2>4 Users selected</h2>
+            <h2>{checkStore.length} Users selected</h2>
           </div>
           <div className="icon--div">
             {checkStore.length > 0 ? (

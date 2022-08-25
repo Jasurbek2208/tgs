@@ -46,6 +46,11 @@ export interface IContext {
   postUsers?: Function;
   usersDelete?: Function;
   usersPut?: Function;
+  // Speaker
+  SpeakerGet?: () => Promise<void>;
+  usersSpeaker?: any;
+  SpeakerPost?: Function;
+  SpeakerDelete?:Function;
 }
 
 // Dispatch<SetStateAction<IState>>
@@ -88,6 +93,40 @@ export interface IData {
   type: string;
   startTime: string;
   endTime: string;
+}
+export interface Speaker {
+  data:{
+  _id: string;
+  checked?: boolean;
+  name: {
+    uz: string;
+    en: string;
+    ru: string;
+  };
+  bio?: {
+    uz: string;
+    en: string;
+    ru: string;
+  };
+  image?: string;
+  __v?: number;
+  }
+}
+export interface S {
+  _id: string;
+  checked?: boolean;
+  name: {
+    uz: string;
+    en: string;
+    ru: string;
+  };
+  bio?: {
+    uz: string;
+    en: string;
+    ru: string;
+  };
+  image?: string;
+  __v?: number;
 }
 export interface IUsers {
   _id?: string;
@@ -326,14 +365,14 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   async function postUsers(body: any) {
     setLoading(true);
     try {
-      const res = await myAxios.post("/user", body)
-      Getusers()
+      const res = await myAxios.post("/user");
+      Getusers();
       console.log(res);
       // toast.success(res.data.message);
     } catch (error) {
       throw error;
     } finally {
-      setLoading(false);
+      setLoading(true);
     }
   }
   // delete users
@@ -382,6 +421,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         userField,
         userAgenda,
         deleteFeild,
+        PutFeild,
         postAgenda,
         getAgenda,
         deleteAgenda,
@@ -392,6 +432,12 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         postUsers,
         usersPut,
         usersDelete,
+        //speaker
+        SpeakerGet,
+        SpeakerPost,
+        SpeakerDelete,
+        SpeakerPut,
+        usersSpeaker,
       }}
     >
       {children}

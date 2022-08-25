@@ -1,27 +1,38 @@
-import React, { useContext, useEffect, useState } from "react";
-
-// Styles
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { UsersStyled } from "../../../Components/usermain/UsersStyled";
-
-// Components
-import SearchInput from "../../../Components/searchinput/SerchInput";
-import AddUserModalPosition from "../../../Components/MODAL/positionAddModal/AddUserModalPosition";
-
-// Context & interface
-import { IContext, IData, MyContext } from "../../../context/Context";
-
-// Loading
 import Loader from "../../../Components/Loader/Loader";
-import AddAgenda from "../../../Components/MODAL/addUserAgenda/AddAgenda";
+import SpeakerModal from "../../../Components/MODAL/ModalSpeaker/SpeakerModal";
+import SearchInput from "../../../Components/searchinput/SerchInput";
+import { UsersStyled } from "../../../Components/usermain/UsersStyled";
+import { IContext, S } from "../../../context/Context";
+import { MyContext } from "../../../context/Context";
+import { Speaker } from "../../../context/Context";
 
-function AgendaCard() {
-  const { getAgenda, deleteAgenda, userAgenda, loading } =
-    useContext<IContext>(MyContext);
-  const [isopen, setisopen] = useState<boolean>(false);
+export default function SpeakerCard() {
   const [checkStore, setCheckStore] = useState<string[]>([]);
+  const [isopen, setisopen] = useState<boolean>(false);
+  const { SpeakerGet, loading, usersSpeaker,SpeakerDelete } = useContext<IContext>(MyContext);
+  console.log(usersSpeaker);
+  
 
-  // DELETE LOGICKASI....
+  function allChecked(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      usersSpeaker?.data.forEach((i: any) => {
+        if (!checkStore.includes(i._id)) {
+          setCheckStore((p) => [...p, i._id]);
+        }
+      });
+      console.log(usersSpeaker);
+    } else {
+      setCheckStore([]);
+    }
+  }
+  useEffect(() => {
+    if (SpeakerGet) {
+      SpeakerGet();
+    }
+  }, []);
+
   function checkedClick(id: string) {
     if (checkStore.includes(id)) {
       setCheckStore((p) => p.filter((i) => i !== id));
@@ -29,44 +40,23 @@ function AgendaCard() {
       setCheckStore((p) => [...p, id]);
     }
   }
-
-  function allChecked(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
-      userAgenda?.data?.forEach((i: IData) => {
-        if (!checkStore.includes(i._id)) {
-          setCheckStore((p) => [...p, i._id]);
-        }
-      });
-    } else {
-      setCheckStore([]);
+  function Delete(){
+    if(SpeakerDelete){
+    SpeakerDelete({checkStore});
     }
   }
-
-  function deleteAgend() {
-    if (deleteAgenda) {
-      deleteAgenda({ ids: checkStore });
-    }
-  }
-  // ========================================
-
-  // get
-  useEffect(() => {
-    if (getAgenda) {
-      getAgenda();
-    }
-  }, []);
 
   return (
-    <UsersStyled2>
+    <StyledSpeaker>
       <UsersStyled>
         <section className="user--card">
           <div className="first--div">
             <div className="tag--div">
-              <h2>{checkStore.length} Users selected</h2>
+              <h2>{checkStore.length} Tickets selected</h2>
             </div>
             <div className="icon--div">
               {checkStore.length > 0 ? (
-                <div className="icon icon-icon1" onClick={deleteAgend}></div>
+                <div className="icon icon-icon1" onClick={()=>Delete()}></div>
               ) : null}
               <div
                 className={
@@ -87,25 +77,7 @@ function AgendaCard() {
             <div className="user-information">
               <div className="expand">
                 <input type="checkbox" onChange={allChecked} />
-                <p>Nomi</p>
-              </div>
-              <div className="expand">
-                <p>Type</p>
-              </div>
-              <div className="expand">
-                <p>Start</p>
-              </div>
-              <div className="expand">
-                <p>End</p>
-              </div>
-              <div className="expand">
-                <p>Duration</p>
-              </div>
-              <div className="expand">
-                <p>Speaker</p>
-              </div>
-              <div className="expand">
-                <p>Theme</p>
+                <p>Full name</p>
               </div>
             </div>
           </div>
@@ -113,52 +85,56 @@ function AgendaCard() {
         {loading ? (
           <Loader />
         ) : (
-          userAgenda?.data?.map((i: IData) => (
-            <div className="map" key={i._id}>
+          usersSpeaker?.data.map((i: S, idx: number) => (
+            <div className="map" key={idx}>
               <div className="fullName">
                 <input
                   type="checkbox"
                   checked={checkStore.includes(i._id)}
-                  onChange={() => checkedClick(i._id)}
+                  onChange={() => {
+                    checkedClick(i._id);
+                  }}
                 />
-                <p>{i?.name.en}</p>
+                <p
+                  onClick={() => {
+                    setisopen(true);
+                  }}
+                >
+                  {i?.name.en}
+                </p>
               </div>
-              <div>
-                <p>{i?.type}</p>
+              <div className="date">
+                <p>{i?.__v}</p>
               </div>
-              <div>
-                <p>{i?.startTime}</p>
-              </div>
-              <div>
-                <p>{i?.endTime}</p>
-              </div>
-              <div>
+              <div className="soha">
                 <p>{i?.name.ru}</p>
               </div>
-              <div>
+              <div className="brand">
                 <p>{i?.name.uz}</p>
               </div>
-              <div>
-                <p>{i?.__v}</p>
+              <div className="brand">
+                <p>{i?.bio?.en}</p>
+              </div>
+              <div className="brand">
+                <p>{i?.bio?.ru}</p>
+              </div>
+              <div className="brand">
+                <p>{i?.bio?.uz}</p>
               </div>
             </div>
           ))
         )}
+        {isopen ? (
+          <SpeakerModal
+            set={setisopen}
+            adduser={checkStore.length === 1 ? false : true}
+          />
+        ) : null}
       </UsersStyled>
-
-      {isopen ? (
-        <AddAgenda
-          adduser={checkStore.length === 1 ? false : true}
-          set={setisopen}
-        />
-      ) : null}
-    </UsersStyled2>
+    </StyledSpeaker>
   );
 }
-
-export default AgendaCard;
-
-const UsersStyled2 = styled.div`
+const StyledSpeaker = styled.div`
   .map {
     padding: 13px 18px;
     display: flex;
@@ -200,9 +176,6 @@ const UsersStyled2 = styled.div`
       p {
         margin: 0;
         color: #8992aa;
-        font-weight: 500;
-        font-size: 13px;
-        max-width: 60px;
       }
     }
   }

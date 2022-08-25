@@ -15,19 +15,18 @@ import { IContext, IData, MyContext } from "../../../context/Context";
 import Loader from "../../../Components/Loader/Loader";
 
 function FieldsCard() {
-  const { getFeild, userField, deleteFeild, loading } =
-    useContext<IContext>(MyContext);
+  const { getFeild, userField, deleteFeild, loading,} = useContext<IContext>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
 
   const [checkStore, setCheckStore] = useState<string[]>([]);
-  const [current, setcurrent] = useState({
+const [current, setcurrent] = useState({
     _id: "",
     name: {
-      uz: "",
-      ru: "",
-      en: "",
-    },
-  });
+        uz: "",
+        ru: "",
+        en: "",
+      }
+})
   function checkedClick(id: string) {
     if (checkStore.includes(id)) {
       setCheckStore((p) => p.filter((i) => i !== id));
@@ -124,14 +123,12 @@ function FieldsCard() {
                     setcurrent(i);
                   }}
                 />
-                <p
+                <p 
                   onClick={() => {
                     setisopen(true);
                     setcurrent(i);
                   }}
-                >
-                  {i?.name.uz}
-                </p>
+                >{i?.name.uz}</p>
               </div>
               <div className="date">
                 <p>{i?.__v}</p>
@@ -150,6 +147,7 @@ function FieldsCard() {
             adduser={checkStore.length === 1 ? false : true}
             set={setisopen}
             user={current}
+            
           />
         ) : null}
       </UsersStyled>

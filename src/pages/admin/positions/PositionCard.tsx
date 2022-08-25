@@ -6,7 +6,7 @@ import { UsersStyled } from "../../../Components/usermain/UsersStyled";
 
 // Components
 import SearchInput from "../../../Components/searchinput/SerchInput";
-import AddUserModalPosition from "../../../Components/addUserModal/positionAddModal/AddUserModalPosition";
+import AddUserModalPosition from "../../../Components/MODAL/positionAddModal/AddUserModalPosition";
 
 // Context & interface
 import { IContext, IData, MyContext } from "../../../context/Context";
@@ -83,7 +83,7 @@ function PositionCard() {
         <section className="user--card">
           <div className="first--div">
             <div className="tag--div">
-              <h2>4 Users selected</h2>
+              <h2>{checkStore.length} Users selected</h2>
             </div>
             <div className="icon--div">
               {checkStore.length > 0 ? (
