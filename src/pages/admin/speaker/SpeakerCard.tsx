@@ -4,9 +4,9 @@ import Loader from "../../../Components/Loader/Loader";
 import SpeakerModal from "../../../Components/MODAL/ModalSpeaker/SpeakerModal";
 import SearchInput from "../../../Components/searchinput/SerchInput";
 import { UsersStyled } from "../../../Components/usermain/UsersStyled";
-import { IContext, S } from "../../../context/Context";
+import { IContext, S } from "../../../interface/Interface";
 import { MyContext } from "../../../context/Context";
-import { Speaker } from "../../../context/Context";
+import { Speaker } from "../../../interface/Interface";
 
 export default function SpeakerCard() {
   const [checkStore, setCheckStore] = useState<string[]>([]);

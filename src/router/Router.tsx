@@ -15,6 +15,10 @@ import Agenda from "../pages/admin/agenda/Agenda";
 import Speaker from "../pages/admin/speaker/Speaker";
 import { Comments } from "../pages/admin/comments/Comments";
 import { Tickets } from "../pages/admin/tikets/Tickets";
+import AgendaCard from "../pages/admin/agenda/AgendaCard";
+import FieldsCard from "../pages/admin/fields/FieldsCard";
+import PositionCard from "../pages/admin/positions/PositionCard";
+import SpeakerCard from "../pages/admin/speaker/SpeakerCard";
 
 
 export default function Router() {
@@ -32,11 +36,11 @@ export default function Router() {
         <>
           <Route element={<AdminLayout />}>
             <Route path="/users" element={<UsersMain />} />
-            <Route path="/fields" element={<Fields />} />
-            <Route path="/positions" element={<Positions />} />
-            <Route path="/agenda" element={<Agenda />} />
+            <Route path="/fields" element={<FieldsCard/>} />
+            <Route path="/positions" element={<PositionCard/>} />
+            <Route path="/agenda" element={<AgendaCard/>} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/speaker" element={<Speaker />} />
+            <Route path="/speaker" element={<SpeakerCard/>} />
             <Route path="/comments" element={<Comments />} />
             <Route path="/tickets" element={<Tickets />} />
             <Route path="*" element={<Navigate to="users" />} />
