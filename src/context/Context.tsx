@@ -2,103 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { myAxios } from "../service/axios/index";
 // import { toast } from 'react-toastify';
 
-import {
-  createContext,
-  Dispatch,
-  FC,
-  ReactNode,
-  SetStateAction,
-  useState,
-} from "react";
+// INterface
+import { createContext, FC, ReactNode, useState } from "react";
+import { IData, IPosit, IRes, IUser, IUsers, Speaker } from "../interface/Interface";
 
 export const MyContext = createContext({});
-
-
-// Dispatch<SetStateAction<IState>>
-
-// AUTH state interface
-export interface IRes {
-  data: {
-    code: number;
-    message: string;
-    data: {
-      password: string;
-      phoneNumber: string;
-      token: string;
-      _id: string;
-      isAuth: boolean;
-    };
-  };
-}
-
-// Login interface
-export interface IUser {
-  password: string;
-  phoneNumber: string;
-}
-
-// Position interface
-export interface IPosit<T> {
-  total: number;
-  data: T[];
-}
-export interface IData {
-  _id: string;
-  checked?: boolean;
-  name: {
-    uz: string;
-    en: string;
-    ru: string;
-  };
-  __v: number;
-  type: string;
-  startTime: string;
-  endTime: string;
-}
-export interface Speaker {
-  data: {
-    _id: string;
-    checked?: boolean;
-    name: {
-      uz: string;
-      en: string;
-      ru: string;
-    };
-    bio?: {
-      uz: string;
-      en: string;
-      ru: string;
-    };
-    image?: string;
-    __v?: number;
-  };
-}
-export interface S {
-  _id: string;
-  checked?: boolean;
-  name: {
-    uz: string;
-    en: string;
-    ru: string;
-  };
-  bio?: {
-    uz: string;
-    en: string;
-    ru: string;
-  };
-  image?: string;
-  __v?: number;
-}
-export interface IUsers {
-  _id?: string;
-  phoneNumber?: string;
-  fullName?: string;
-  fieldId?: string;
-  brand?: string;
-  employeeCount?: number;
-  positionId?: string;
-  __v?: number;
-}
 
 const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   const navigate = useNavigate();

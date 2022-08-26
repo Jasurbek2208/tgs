@@ -43,7 +43,6 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
   function save() {
     if (postUsers) {
       let count = Number(name.employeeCount);
-      console.log(typeof count, count);
 
       setName((p) => ({ ...p, employeeCount: count }));
       postUsers(name);
