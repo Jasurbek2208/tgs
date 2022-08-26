@@ -215,6 +215,8 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   async function deletePosition(ids: {}) {
     try {
       const res = await myAxios.delete("/position", { data: ids });
+      console.log(res);
+      
       getPosition();
 
       // toast.success(res.data.message);
@@ -443,10 +445,11 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // put speaker
-  async function SpeakerPut() {
+  async function SpeakerPut(ketmon:{}) {
     setLoading(true);
     try {
-      const res = await myAxios.put("/speaker");
+      console.log(ketmon);
+      const res = await myAxios.put("/speaker",ketmon);
       console.log(res);
       SpeakerGet();
     } catch (error) {
@@ -489,7 +492,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         SpeakerPost,
         SpeakerDelete,
         SpeakerPut,
-        usersSpeaker,
+        usersSpeaker
       }}
     >
       {children}

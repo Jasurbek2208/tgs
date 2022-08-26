@@ -11,9 +11,10 @@ import { Speaker } from "../../../context/Context";
 export default function SpeakerCard() {
   const [checkStore, setCheckStore] = useState<string[]>([]);
   const [isopen, setisopen] = useState<boolean>(false);
-  const { SpeakerGet, loading, usersSpeaker,SpeakerDelete } = useContext<IContext>(MyContext);
+  const { SpeakerGet, loading, usersSpeaker, SpeakerDelete } =
+    useContext<IContext>(MyContext);
   console.log(usersSpeaker);
-  
+  const [current, setcurrent] = useState({});
 
   function allChecked(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
@@ -40,12 +41,11 @@ export default function SpeakerCard() {
       setCheckStore((p) => [...p, id]);
     }
   }
-  function Delete(){
-    if(SpeakerDelete){
-    SpeakerDelete({ids:checkStore});
+  function Delete() {
+    if (SpeakerDelete) {
+      SpeakerDelete({ ids: checkStore });
     }
   }
-
   return (
     <StyledSpeaker>
       <UsersStyled>
@@ -56,7 +56,7 @@ export default function SpeakerCard() {
             </div>
             <div className="icon--div">
               {checkStore.length > 0 ? (
-                <div className="icon icon-icon1" onClick={()=>Delete()}></div>
+                <div className="icon icon-icon1" onClick={() => Delete()}></div>
               ) : null}
               <div
                 className={
@@ -86,22 +86,24 @@ export default function SpeakerCard() {
           <Loader />
         ) : (
           usersSpeaker?.data.map((i: S, idx: number) => (
-            <div className="map" key={idx}>
+            <div
+              className="map"
+              key={idx}
+              onClick={() => {
+                setisopen(true);
+                setcurrent(i);
+              }}
+            >
               <div className="fullName">
                 <input
                   type="checkbox"
                   checked={checkStore.includes(i._id)}
                   onChange={() => {
                     checkedClick(i._id);
+                    setcurrent(i);
                   }}
                 />
-                <p
-                  onClick={() => {
-                    setisopen(true);
-                  }}
-                >
-                  {i?.name.en}
-                </p>
+                <p> {i?.name.en}</p>
               </div>
               <div className="date">
                 <p>{i?.__v}</p>
@@ -128,6 +130,7 @@ export default function SpeakerCard() {
           <SpeakerModal
             set={setisopen}
             adduser={checkStore.length === 1 ? false : true}
+            curent={current}
           />
         ) : null}
       </UsersStyled>

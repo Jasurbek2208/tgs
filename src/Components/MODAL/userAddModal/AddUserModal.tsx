@@ -36,7 +36,7 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
 
   function onchange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    setName((p) => ({ ...p, [name]: value }));
+    setName((p:any) => ({ ...p, [name]: value }));
   }
   console.log(name);
   function save() {
@@ -44,7 +44,7 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
       let count = Number(name.employeeCount);
       console.log(typeof count, count);
 
-      setName((p) => ({ ...p, employeeCount: count }));
+      setName((p:any) => ({ ...p, employeeCount: count }));
       postUsers(name);
     }
     // const _id = user?._id;

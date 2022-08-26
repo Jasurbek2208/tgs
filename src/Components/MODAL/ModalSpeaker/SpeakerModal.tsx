@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import { IContext, MyContext } from "../../../context/Context";
 
@@ -12,47 +12,63 @@ export interface Field {
 interface Speaker {
   adduser: boolean;
   set: Function;
+  curent: any;
   user?: {
     _id: string;
     name: {
       uz: string;
       ru: string;
       en: string;
-    }
+    };
   };
 }
-export default function SpeakerModal({ adduser, set,}: Speaker): JSX.Element {
-  const { SpeakerPost, PutFeild,usersSpeaker  } = useContext<IContext>(MyContext);
+export default function SpeakerModal({
+  adduser,
+  set,
+  curent,
+}: Speaker): JSX.Element {
+  const { SpeakerPost, PutFeild, usersSpeaker } =
+    useContext<IContext>(MyContext);
 
-  const [name , setname] = useState({
+  const [name, setname] = useState({
     uz: "",
     ru: "",
     en: "",
-  })
-  const [bio , setbio] = useState({
-      uz: "",
-      ru: "",
-      en: "",
-  })
-  
-  function SpeakerChange(e: React.ChangeEvent<HTMLInputElement>){
-    const {name,value} = e.target;
-    setname(p=>({...p,[name]:value}))
-    console.log(name);
-  }
-  
-  function Speakerbio(e: React.ChangeEvent<HTMLInputElement>){
-    const {name,value} = e.target;
-    setbio(p=>({...p,[name]:value}))
-    console.log(name);
-  }
-  function save(){
-    if(SpeakerPost){
-    SpeakerPost({name,bio, image: "https:/skdsld"});
-    set(false);
-    }
+  });
+  const [bio, setbio] = useState({
+    uz: "",
+    ru: "",
+    en: "",
+  });
+  useEffect(() => {
+    if (!curent?._id) return;
+    setname(curent.name);
+    setbio(curent.bio);
+  }, []);
 
+  function SpeakerChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setname((p) => ({ ...p, [name]: value }));
+    console.log(name);
   }
+
+  function Speakerbio(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setbio((p) => ({ ...p, [name]: value }));
+    console.log(name);
+  }
+  function save() {
+    if (curent._id) {
+      if (PutFeild) {
+        PutFeild({ name, bio, _id: curent._id, image: "http:/safsgfhjk" });
+      }
+    } else {
+      if (SpeakerPost) {
+        SpeakerPost({ name, bio, image: "https:/skdsld" });
+        set(false);
+      }
+    }
+  } 
   return (
     <Styledapp>
       <form>
@@ -73,10 +89,9 @@ export default function SpeakerModal({ adduser, set,}: Speaker): JSX.Element {
           placeholder="Name in Uzbek *"
           onChange={SpeakerChange}
           name="uz"
-          
           value={name.uz}
         />
-        
+
         <Input
           placeholder="Bio in English*"
           onChange={Speakerbio}
@@ -96,8 +111,14 @@ export default function SpeakerModal({ adduser, set,}: Speaker): JSX.Element {
           value={bio.uz}
         />
         <div className="buton">
-            <Botton pe={false} typee="button" onclik={()=>{save()}} >  
-              Save
+          <Botton
+            pe={false}
+            typee="button"
+            onclik={() => {
+              save();
+            }}
+          >
+            Save
           </Botton>
           <Botton typee="submit" pe={true} onclik={() => set(false)}>
             Cancel
