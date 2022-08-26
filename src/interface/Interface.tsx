@@ -1,5 +1,29 @@
 import { Dispatch, SetStateAction } from "react";
 
+export interface IAuth {
+  auth?: {
+    token: string;
+    _id: number;
+    phoneNumber: string;
+    password: string;
+    isAuth: boolean;
+  };
+}
+export interface ILogin {
+  backfon?: string;
+  userLogin?: (value: IUser) => Promise<void>;
+  user?: IUser;
+}
+// Interfaces
+export interface Field {
+  id: number;
+  name: string;
+}
+interface Adduser {
+  adduser: boolean;
+  set: Function;
+  user?: any;
+}
 export interface IContext {
   // Login
   auth?: {};

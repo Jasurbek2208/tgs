@@ -16,15 +16,6 @@ import Speaker from "../pages/admin/speaker/Speaker";
 import { Comments } from "../pages/admin/comments/Comments";
 import { Tickets } from "../pages/admin/tikets/Tickets";
 
-export interface IAuth {
-  auth?: {
-    token: string;
-    _id: number;
-    phoneNumber: string;
-    password: string;
-    isAuth: boolean;
-  };
-}
 
 export default function Router() {
   const isAuth = localStorage.getItem("ISAUTH") || false;

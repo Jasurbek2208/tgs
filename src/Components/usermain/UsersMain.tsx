@@ -19,6 +19,7 @@ export const UsersMain: React.FC = () => {
   const { Getusers, users, usersDelete, loading } = useContext<any>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
+console.log(users);
 
   const [curent, setCurent] = useState({
     fullName: "",
@@ -58,9 +59,8 @@ export const UsersMain: React.FC = () => {
   // ========================================
   // get
   useEffect(() => {
-    if (Getusers) {
       Getusers();
-    }
+    
   }, []);
 
   useEffect(() => {
@@ -177,8 +177,6 @@ export const UsersMain: React.FC = () => {
           ))
         )}
       </StyledUserCard>
-
-      {/* USERS CARD */}
 
       {isopen ? (
         <AddUserModal

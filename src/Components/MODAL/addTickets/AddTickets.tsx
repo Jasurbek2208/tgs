@@ -10,20 +10,11 @@ import Botton from "../../addUserModal/botom/Botton";
 import Input from "../../addUserModal/input/Input";
 import Secect from "../../addUserModal/select/select2/Secect";
 
-// Interfaces
-export interface Field {
-  id: number;
-  name: string;
-}
-interface Adduser {
-  adduser: boolean;
-  set: Function;
-  user?: any;
-}
+
 
 export default function AddTickets({ adduser, set, user }: Adduser) {
   // Context imports
-  const { postTickets, userPosit, userField } = useContext<IContext>(MyContext);
+  const {postTickets} = useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
     category: "",
