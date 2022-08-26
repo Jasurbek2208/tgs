@@ -16,6 +16,10 @@ export default function Navbar() {
               ? "Positions"
               : location === "/agenda"
               ? "Agenda"
+              : location === "/comments"
+              ? "Comments"
+              : location === "/tickets"
+              ? "Tickets"
               : location === "/settings"
               ? "Settings":
               location === "/speaker"? "Speaker":

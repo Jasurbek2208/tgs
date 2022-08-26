@@ -2,24 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 //
-import {
-  IData,
-  IPosit,
-  IUsers,
-  MyContext,
-} from "../../context/Context";
+import { IData, MyContext } from "../../../context/Context";
 
 //
-import AddUserModal from "../MODAL/userAddModal/AddUserModal";
-import Loader from "../Loader/Loader";
-import SearchInput from "../searchinput/SerchInput";
-import { UsersStyled } from "./UsersStyled";
+import Loader from "../../../Components/Loader/Loader";
+import SearchInput from "../../../Components/searchinput/SerchInput";
+import { UsersStyled } from "../../../Components/usermain/UsersStyled";
 
-export const UsersMain: React.FC = () => {
+export const Comments: React.FC = () => {
   const { Getusers, users, usersDelete, loading } = useContext<any>(MyContext);
-  const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
-console.log(users);
 
   const [curent, setCurent] = useState({
     fullName: "",
@@ -59,8 +51,9 @@ console.log(users);
   // ========================================
   // get
   useEffect(() => {
+    if (Getusers) {
       Getusers();
-    
+    }
   }, []);
 
   useEffect(() => {
@@ -81,21 +74,9 @@ console.log(users);
       <section className="user--card">
         <div className="first--div">
           <div className="tag--div">
-            <h2>{checkStore.length}  Users selected</h2>
+            <h2>{checkStore.length} Users selected</h2>
           </div>
           <div className="icon--div">
-            {checkStore.length > 0 ? (
-              <div className="icon icon-icon1" onClick={deletePosit}></div>
-            ) : null}
-            <div
-              className={
-                "icon " +
-                (checkStore.length === 1 ? "icon-icon2" : "icon-addUser")
-              }
-              onClick={() => {
-                setisopen(true);
-              }}
-            ></div>
             <div className="icon icon-icon3"></div>
             <div className="icon icon-icon4"></div>
             <div className="icon icon-icon5"></div>
@@ -131,60 +112,7 @@ console.log(users);
           </div>
         </div>
       </section>
-      <StyledUserCard>
-        {loading ? (
-          <Loader />
-        ) : (
-          users?.data?.map((i: any) => (
-            <div className="map" key={i._id}>
-              <div className="fullName">
-                <input
-                  type="checkbox"
-                  checked={checkStore.includes(i._id)}
-                  onChange={() => {
-                    checkedClick(i._id);
-                    setCurent(i);
-                  }}
-                />
-                <p
-                  onClick={() => {
-                    setisopen(true);
-                    setCurent(i);
-                  }}
-                >
-                  {i?.fullName}
-                </p>
-              </div>
-              <div className="date">
-                <p>{i?.brand}</p>
-              </div>
-              <div className="soha">
-                <p>{i?.phoneNumber}</p>
-              </div>
-              <div className="brand">
-                <p style={{ marginLeft: "20px" }}>{i?.employeeCount}</p>
-              </div>
-              <div className="brand">
-                <p>{i?.fieldId}</p>
-              </div>
-              <div className="brand">
-                <p style={{ marginLeft: "20px" }}>{i?.__v}</p>
-              </div>
-              <div className="brand">
-                <p>{i?.positionId}</p>
-              </div>
-            </div>
-          ))
-        )}
-      </StyledUserCard>
-
-      {isopen ? (
-        <AddUserModal
-          adduser={checkStore.length === 1 ? false : true}
-          set={setisopen}
-          user={curent}
-        />
-      ) : null}
+      <StyledUserCard>{loading ? <Loader /> : null}</StyledUserCard>
     </UsersStyled>
   );
 };
@@ -229,7 +157,6 @@ const StyledUserCard = styled.div`
       }
 
       p {
-        margin: 0;
         color: #8992aa;
         font-size: 13px;
         line-height: 15px;

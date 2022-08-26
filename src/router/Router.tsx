@@ -7,22 +7,15 @@ import AdminLayout from "../layout/adminLayout/AdminLayout";
 import Login from "../pages/auth/Login";
 
 // ADMIN PAGE
-import {UsersMain} from "../Components/usermain/UsersMain";
+import { UsersMain } from "../Components/usermain/UsersMain";
 import Positions from "../pages/admin/positions/Positions";
 import Fields from "../pages/admin/fields/Fields";
 import Settings from "../pages/settings/Settings";
 import Agenda from "../pages/admin/agenda/Agenda";
 import Speaker from "../pages/admin/speaker/Speaker";
+import { Comments } from "../pages/admin/comments/Comments";
+import { Tickets } from "../pages/admin/tikets/Tickets";
 
-export interface IAuth {
-  auth?: {
-    token: string;
-    _id: number;
-    phoneNumber: string;
-    password: string;
-    isAuth: boolean;
-  };
-}
 
 export default function Router() {
   const isAuth = localStorage.getItem("ISAUTH") || false;
@@ -42,8 +35,10 @@ export default function Router() {
             <Route path="/fields" element={<Fields />} />
             <Route path="/positions" element={<Positions />} />
             <Route path="/agenda" element={<Agenda />} />
-            <Route path="/settings" element={<Settings/>} />
-            <Route path="/speaker" element={<Speaker/>}/>
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/speaker" element={<Speaker />} />
+            <Route path="/comments" element={<Comments />} />
+            <Route path="/tickets" element={<Tickets />} />
             <Route path="*" element={<Navigate to="users" />} />
           </Route>
         </>

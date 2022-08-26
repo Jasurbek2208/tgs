@@ -10,62 +10,64 @@ import Botton from "../../addUserModal/botom/Botton";
 import Input from "../../addUserModal/input/Input";
 import Secect from "../../addUserModal/select/select2/Secect";
 
-// Interfaces
-export interface Field {
-  id: number;
-  name: string;
-}
-interface Adduser {
-  adduser: boolean;
-  set: Function;
-  user?: any;
-}
 
-export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
+
+export default function AddTickets({ adduser, set, user }: Adduser) {
   // Context imports
-  const { postUsers, usersPut, userPosit, userField, getPosition, getFeild } =
-    useContext<IContext>(MyContext);
+  const {postTickets} = useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
-    fullName: "",
-    phoneNumber: "",
-    fieldId: "",
-    brand: "",
-    employeeCount: 1,
-    positionId: "",
+    category: "",
+    sector: "",
+    row: "",
+    seat: "",
+    price: 1200,
   });
 
   function onchange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    setName((p:any) => ({ ...p, [name]: value }));
+    setName((p) => ({ ...p, [name]: value }));
   }
   console.log(name);
   function save() {
-    if (postUsers) {
-      let count = Number(name.employeeCount);
+    if (postTickets) {
+      let count = Number(name.price);
       console.log(typeof count, count);
 
-      setName((p:any) => ({ ...p, employeeCount: count }));
-      postUsers(name);
+      setName((p) => ({ ...p, price: count }));
+      postTickets(name);
     }
-    // const _id = user?._id;
-    // if (usersPut) {
-    //   usersPut({ _id, name });
-    // }
-    setName({
-      fullName: "",
-      phoneNumber: "",
-      fieldId: "",
-      brand: "",
-      employeeCount: 1,
-      positionId: "",
-    });
+    // setName({
+    //   category: "",
+    //   sector: "",
+    //   row: "",
+    //   seat: "",
+    //   price: 1200,
+    // });
     set(false);
   }
 
+  const options: {}[] = [
+    {
+        id: 0,
+        name: "vip",
+    },
+    {
+        id: 0,
+        name: "premium",
+    },
+    {
+        id: 0,
+        name: "business",
+    },
+    {
+        id: 0,
+        name: "econom",
+    },
+  ]
+
+
   useEffect(() => {
-    if (getPosition) getPosition();
-    if (getFeild) getFeild();
     if (!user?._id) return;
     setName(user);
   }, []);
@@ -74,38 +76,33 @@ export default function AddUserModalPosition({ adduser, set, user }: Adduser) {
     <Styledapp>
       <form action="">
         <h1>{adduser ? "Add user" : "Edit user"}</h1>
+        <Secect placeholder="category" setName={setName} options={options} />
         <Input
-          placeholder="Full name *"
+          placeholder="Sector *"
           onChange={onchange}
-          name="fullName"
-          value={name.fullName}
+          name="sector"
+          value={name.sector}
           setName={setName}
         />
         <Input
-          placeholder="Phone number *"
+          placeholder="Row *"
+          name="row"
           onChange={onchange}
-          name="phoneNumber"
-          value={name.phoneNumber}
-          setName={setName}
-        />
-        <Secect placeholder="Fields" usersDate={userField} setName={setName} />
-        <Input
-          placeholder="Brand"
-          name="brand"
-          onChange={onchange}
-          value={name.brand}
+          value={name.row}
           setName={setName}
         />
         <Input
-          placeholder="Employee count"
-          name="employeeCount"
+          placeholder="Seat *"
+          name="seat"
           onChange={onchange}
-          value={name.employeeCount}
+          value={name.seat}
           setName={setName}
         />
-        <Secect
-          placeholder="Positions"
-          usersDate={userPosit}
+        <Input
+          placeholder="Narxi *"
+          name="price"
+          onChange={onchange}
+          value={name.price}
           setName={setName}
         />
         <div className="buton">

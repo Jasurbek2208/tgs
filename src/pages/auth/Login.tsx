@@ -5,11 +5,6 @@ import styled from "styled-components";
 import backFon from "../../assets/img/loginBackground.png";
 import { IUser, MyContext } from "../../context/Context";
 
-export interface ILogin {
-  backfon?: string;
-  userLogin?: (value: IUser) => Promise<void>;
-  user?: IUser;
-}
 
 export default function Login() {
   const { userLogin } = useContext<ILogin>(MyContext);

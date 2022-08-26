@@ -6,7 +6,7 @@ import { Field } from "../../../MODAL/userAddModal/AddUserModal";
 export interface SecectProps {
   options?: any;
   usersDate?: any;
-  placeholder?: string;
+  placeholder: string;
   setName?: any;
 }
 
@@ -18,17 +18,18 @@ export default function Secect({
 }: SecectProps) {
   const [assa, setassa] = useState(false);
   const [value, setvalue] = useState("");
-  function d(name: string) {
+  function d(name: string, placeholder: string) {
     setvalue(name);
     setassa(false);
+    setName((p: {}) => ({ ...p, [placeholder]: name }));
   }
 
-  
-  function onclick( id: string, name: string ) {
+  function onclick(id: string, name: string) {
     console.log(id, name, placeholder);
 
     if (placeholder === "Fields") setName((p: {}) => ({ ...p, fieldId: id }));
-    if (placeholder === "Positions") setName((p: {}) => ({ ...p, positionId: id }));
+    if (placeholder === "Positions")
+      setName((p: {}) => ({ ...p, positionId: id }));
   }
 
   return (
@@ -36,7 +37,7 @@ export default function Secect({
       <section
         className="select_heder"
         onClick={() => {
-          setassa((p:any) => !p);
+          setassa((p: any) => !p);
         }}
       >
         <div className="ch_heder">
@@ -49,7 +50,7 @@ export default function Secect({
           <ul>
             {options
               ? options.map((i: any, idx: number) => (
-                  <li key={idx} onClick={() => d(i.name)}>
+                  <li key={idx} onClick={() => d(i.name, placeholder)}>
                     {i.name}
                   </li>
                 ))
@@ -57,7 +58,7 @@ export default function Secect({
                   <li
                     key={idx}
                     onClick={() => {
-                      d(i.name.uz);
+                      d(i.name.uz, placeholder);
                       onclick(i._id, i.name.uz);
                     }}
                   >

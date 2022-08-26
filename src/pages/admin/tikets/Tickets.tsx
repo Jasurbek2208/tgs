@@ -2,24 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 //
-import {
-  IData,
-  IPosit,
-  IUsers,
-  MyContext,
-} from "../../context/Context";
+import { IData, MyContext } from "../../../context/Context";
 
 //
-import AddUserModal from "../MODAL/userAddModal/AddUserModal";
-import Loader from "../Loader/Loader";
-import SearchInput from "../searchinput/SerchInput";
-import { UsersStyled } from "./UsersStyled";
+import Loader from "../../../Components/Loader/Loader";
+import SearchInput from "../../../Components/searchinput/SerchInput";
+import { UsersStyled } from "../../../Components/usermain/UsersStyled";
+import AddTickets from "../../../Components/MODAL/addTickets/AddTickets";
+import { IContext } from "../../../interface/Interface";
 
-export const UsersMain: React.FC = () => {
-  const { Getusers, users, usersDelete, loading } = useContext<any>(MyContext);
+export const Tickets: React.FC = () => {
+  const { loading, getTickets, ticketsDelete, tickets } =
+    useContext<IContext>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
-console.log(users);
 
   const [curent, setCurent] = useState({
     fullName: "",
@@ -41,7 +37,7 @@ console.log(users);
 
   function allChecked(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
-      users?.data?.forEach((i: IData) => {
+      tickets?.data?.forEach((i: IData) => {
         if (!checkStore.includes(i._id)) {
           setCheckStore((p) => [...p, i._id]);
         }
@@ -51,16 +47,15 @@ console.log(users);
     }
   }
 
-  function deletePosit() {
-    if (usersDelete) {
-      usersDelete({ ids: checkStore });
+  function deleteTickets() {
+    if (ticketsDelete) {
+      ticketsDelete({ ids: checkStore });
     }
   }
   // ========================================
   // get
   useEffect(() => {
-      Getusers();
-    
+      getTickets();
   }, []);
 
   useEffect(() => {
@@ -81,11 +76,11 @@ console.log(users);
       <section className="user--card">
         <div className="first--div">
           <div className="tag--div">
-            <h2>{checkStore.length}  Users selected</h2>
+            <h2>{checkStore.length} Users selected</h2>
           </div>
           <div className="icon--div">
             {checkStore.length > 0 ? (
-              <div className="icon icon-icon1" onClick={deletePosit}></div>
+              <div className="icon icon-icon1" onClick={deleteTickets}></div>
             ) : null}
             <div
               className={
@@ -108,10 +103,10 @@ console.log(users);
           <div className="user-information">
             <div className="expand">
               <input type="checkbox" onChange={allChecked} />
-              <p>Full name</p>
+              <p>Kategoriya</p>
             </div>
             <div className="expand">
-              <p>Date</p>
+              <p>Sector</p>
             </div>
             <div className="expand">
               <p>Title</p>
@@ -135,7 +130,7 @@ console.log(users);
         {loading ? (
           <Loader />
         ) : (
-          users?.data?.map((i: any) => (
+          tickets?.data?.map((i: any) => (
             <div className="map" key={i._id}>
               <div className="fullName">
                 <input
@@ -152,34 +147,36 @@ console.log(users);
                     setCurent(i);
                   }}
                 >
-                  {i?.fullName}
+                  {i?.category}
                 </p>
               </div>
               <div className="date">
-                <p>{i?.brand}</p>
+                <p>{i?.sector}</p>
               </div>
               <div className="soha">
-                <p>{i?.phoneNumber}</p>
+                <p>{i?.row}</p>
               </div>
               <div className="brand">
-                <p style={{ marginLeft: "20px" }}>{i?.employeeCount}</p>
+                <p style={{ marginLeft: "20px" }}>{i?.seat}</p>
               </div>
               <div className="brand">
-                <p>{i?.fieldId}</p>
+                <p style={{ marginLeft: "20px" }}>{i?.price}</p>
               </div>
               <div className="brand">
-                <p style={{ marginLeft: "20px" }}>{i?.__v}</p>
+                <p>{i?.__v}</p>
               </div>
               <div className="brand">
-                <p>{i?.positionId}</p>
+                <p>{i?._id}</p>
               </div>
             </div>
           ))
         )}
       </StyledUserCard>
 
+      {/* USERS CARD */}
+
       {isopen ? (
-        <AddUserModal
+        <AddTickets
           adduser={checkStore.length === 1 ? false : true}
           set={setisopen}
           user={curent}
