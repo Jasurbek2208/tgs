@@ -9,13 +9,14 @@ import SearchInput from "../../../Components/searchinput/SerchInput";
 import Field from "../../../Components/MODAL/Add field/Feild";
 
 // Interface
-import { IContext, IData, MyContext } from "../../../context/Context";
+import {MyContext} from "../../../context/Context";
 
 // Loading
 import Loader from "../../../Components/Loader/Loader";
+import { IField } from "../../../interface/Interface";
 
 function FieldsCard() {
-  const { getFeild, userField, deleteFeild, loading,} = useContext<IContext>(MyContext);
+  const { getFeild, userField, deleteFeild} = useContext<IField>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
 
   const [checkStore, setCheckStore] = useState<string[]>([]);

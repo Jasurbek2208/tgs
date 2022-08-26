@@ -420,7 +420,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         SpeakerPost,
         SpeakerDelete,
         SpeakerPut,
-        usersSpeaker
+        usersSpeaker,
         getTickets,
         postTickets,
         ticketsDelete,

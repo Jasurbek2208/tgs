@@ -9,15 +9,16 @@ import SearchInput from "../../../Components/searchinput/SerchInput";
 import AddUserModalPosition from "../../../Components/MODAL/positionAddModal/AddUserModalPosition";
 
 // Context & interface
-import { IContext, IData, MyContext } from "../../../context/Context";
+import { MyContext } from "../../../context/Context";
 
 // Loading
 import Loader from "../../../Components/Loader/Loader";
 import AddAgenda from "../../../Components/MODAL/addUserAgenda/AddAgenda";
+import { IAgenda, ILoading } from "../../../interface/Interface";
 
 function AgendaCard() {
-  const { getAgenda, deleteAgenda, userAgenda, loading } =
-    useContext<IContext>(MyContext);
+  const { getAgenda, deleteAgenda, userAgenda} =useContext<IAgenda>(MyContext);
+  const {loading} =useContext<ILoading>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
 
@@ -31,8 +32,8 @@ function AgendaCard() {
   }
 
   function allChecked(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
-      userAgenda?.data?.forEach((i: IData) => {
+    if (e.target.checked){
+      userAgenda?.data?.forEach((i:any) => {
         if (!checkStore.includes(i._id)) {
           setCheckStore((p) => [...p, i._id]);
         }
@@ -51,9 +52,7 @@ function AgendaCard() {
 
   // get
   useEffect(() => {
-    if (getAgenda) {
       getAgenda();
-    }
   }, []);
 
   return (
@@ -113,7 +112,7 @@ function AgendaCard() {
         {loading ? (
           <Loader />
         ) : (
-          userAgenda?.data?.map((i: IData) => (
+          userAgenda?.data?.map((i: any) => (
             <div className="map" key={i._id}>
               <div className="fullName">
                 <input

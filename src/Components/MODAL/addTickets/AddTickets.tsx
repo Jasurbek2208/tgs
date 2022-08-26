@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 // Context
 import { MyContext } from "../../../context/Context";
-import { IContext } from "../../../interface/Interface";
+import {ITickets } from "../../../interface/Interface";
 
 // Components
 import Botton from "../../addUserModal/botom/Botton";
@@ -12,9 +12,9 @@ import Secect from "../../addUserModal/select/select2/Secect";
 
 
 
-export default function AddTickets({ adduser, set, user }: Adduser) {
+export default function AddTickets({ adduser, set, user }: any) {
   // Context imports
-  const {postTickets} = useContext<IContext>(MyContext);
+  const {postTickets} = useContext<ITickets>(MyContext);
 
   const [name, setName] = useState({
     category: "",
@@ -33,7 +33,6 @@ export default function AddTickets({ adduser, set, user }: Adduser) {
     if (postTickets) {
       let count = Number(name.price);
       console.log(typeof count, count);
-
       setName((p) => ({ ...p, price: count }));
       postTickets(name);
     }

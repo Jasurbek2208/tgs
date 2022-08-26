@@ -4,16 +4,15 @@ import Loader from "../../../Components/Loader/Loader";
 import SpeakerModal from "../../../Components/MODAL/ModalSpeaker/SpeakerModal";
 import SearchInput from "../../../Components/searchinput/SerchInput";
 import { UsersStyled } from "../../../Components/usermain/UsersStyled";
-import { IContext, S } from "../../../interface/Interface";
 import { MyContext } from "../../../context/Context";
-import { Speaker } from "../../../interface/Interface";
+import { ILoading, ISpeaker } from "../../../interface/Interface";
 
 export default function SpeakerCard() {
   const [checkStore, setCheckStore] = useState<string[]>([]);
   const [isopen, setisopen] = useState<boolean>(false);
-  const { SpeakerGet, loading, usersSpeaker, SpeakerDelete } =
-    useContext<IContext>(MyContext);
-  console.log(usersSpeaker);
+  const { SpeakerGet,usersSpeaker, SpeakerDelete ,SpeakerPost } =useContext<ISpeaker>(MyContext);
+  const {loading} =useContext<ILoading>(MyContext);
+
   const [current, setcurrent] = useState({});
 
   function allChecked(e: React.ChangeEvent<HTMLInputElement>) {

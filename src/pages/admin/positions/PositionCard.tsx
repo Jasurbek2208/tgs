@@ -9,14 +9,14 @@ import SearchInput from "../../../Components/searchinput/SerchInput";
 import AddUserModalPosition from "../../../Components/MODAL/positionAddModal/AddUserModalPosition";
 
 // Context & interface
-import { IContext, IData, MyContext } from "../../../context/Context";
+import {MyContext } from "../../../context/Context";
 
 // Loading
 import Loader from "../../../Components/Loader/Loader";
+import { IPosition } from "../../../interface/Interface";
 
 function PositionCard() {
-  const { getPosition, deletePosition, userPosit, loading } =
-    useContext<IContext>(MyContext);
+  const { getPosition, deletePosition, userPosit} =useContext<IPosition>(MyContext);
   const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
 

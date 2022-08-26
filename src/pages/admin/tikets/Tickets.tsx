@@ -2,18 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 //
-import { IData, MyContext } from "../../../context/Context";
+import {MyContext } from "../../../context/Context";
 
 //
 import Loader from "../../../Components/Loader/Loader";
 import SearchInput from "../../../Components/searchinput/SerchInput";
 import { UsersStyled } from "../../../Components/usermain/UsersStyled";
 import AddTickets from "../../../Components/MODAL/addTickets/AddTickets";
-import { IContext } from "../../../interface/Interface";
+import { IContext, ITickets } from "../../../interface/Interface";
 
 export const Tickets: React.FC = () => {
-  const { loading, getTickets, ticketsDelete, tickets } =
-    useContext<IContext>(MyContext);
+  const {getTickets, ticketsDelete, tickets } =useContext<ITickets>(MyContext);
+
   const [isopen, setisopen] = useState<boolean>(false);
   const [checkStore, setCheckStore] = useState<string[]>([]);
 

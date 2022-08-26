@@ -19,7 +19,7 @@ export interface Field {
   id: number;
   name: string;
 }
-interface Adduser {
+export interface Adduser {
   adduser: boolean;
   set: Function;
   user?: any;
@@ -34,11 +34,11 @@ export interface IContext {
 
 // Agenda
 export interface IAgenda {
-  userAgenda: IPosit<IData>;
-  setUserAgenda: Dispatch<SetStateAction<{}>>;
-  getAgenda: () => Promise<void>;
-  postAgenda: Function;
-  deleteAgenda: Function;
+  userAgenda?: IPosit<IData>;
+  setUserAgenda?: Dispatch<SetStateAction<{}>>;
+  getAgenda?: () => Promise<void>;
+  postAgenda?: Function;
+  deleteAgenda?: Function;
 }
 
 // Field
