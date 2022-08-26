@@ -48,6 +48,16 @@ export default function Sidebar() {
           <div className="icon speaker"></div>
         </div>
       </Link>
+      <Link to="/tickets">
+        <div className={"icon__wrapper" + (location === "/tickets" ? " On" : "")}>
+          <div className="icon icon-ticket"></div>
+        </div>
+      </Link>
+      <Link to="/comments">
+      <div className={"icon__wrapper" + (location === "/comments" ? " On" : "")}>
+          <div className="icon comments"></div>
+        </div>
+      </Link>
       <Link to="/settings">
         <div className={"icon__wrapper" + (location === "/settings" ? " On" : "")}>
           <div className="icon icon-settings"></div>

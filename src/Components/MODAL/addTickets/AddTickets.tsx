@@ -1,13 +1,16 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
+// Context
 import { MyContext } from "../../../context/Context";
 import { IContext } from "../../../interface/Interface";
 
+// Components
 import Botton from "../../addUserModal/botom/Botton";
 import Input from "../../addUserModal/input/Input";
 import Secect from "../../addUserModal/select/select2/Secect";
 
+// Interfaces
 export interface Field {
   id: number;
   name: string;
@@ -15,106 +18,102 @@ export interface Field {
 interface Adduser {
   adduser: boolean;
   set: Function;
+  user?: any;
 }
-export default function AddAgenda({ adduser, set }: Adduser) {
-  const { postAgenda, userAgenda } = useContext<IContext>(MyContext);
+
+export default function AddTickets({ adduser, set, user }: Adduser) {
+  // Context imports
+  const { postTickets, userPosit, userField } = useContext<IContext>(MyContext);
 
   const [name, setName] = useState({
-    name: {
-      uz: "",
-      ru: "",
-      en: "",
-    },
-    type: "",
-    startTime: "",
-    endTime: "",
+    category: "",
+    sector: "",
+    row: "",
+    seat: "",
+    price: 1200,
   });
 
   function onchange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setName((p) => ({ ...p, [name]: value }));
   }
-  function onchangeName(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setName((p: any) => ({
-      ...p,
-      name: { en: p.name.en, ru: p.name.ru, uz: p.name.uz, [name]: value },
-    }));
-  }
-
+  console.log(name);
   function save() {
-    if (postAgenda) {
-      postAgenda( name );
+    if (postTickets) {
+      let count = Number(name.price);
+      console.log(typeof count, count);
+
+      setName((p) => ({ ...p, price: count }));
+      postTickets(name);
     }
-    setName({
-      name: {
-        uz: "",
-        ru: "",
-        en: "",
-      },
-      type: "",
-      startTime: "",
-      endTime: "",
-    });
+    // setName({
+    //   category: "",
+    //   sector: "",
+    //   row: "",
+    //   seat: "",
+    //   price: 1200,
+    // });
     set(false);
   }
 
   const options: {}[] = [
     {
-      id: 0,
-      name: "Speaker",
+        id: 0,
+        name: "vip",
     },
     {
-      id: 0,
-      name: "Activity",
+        id: 0,
+        name: "premium",
     },
-  ];
+    {
+        id: 0,
+        name: "business",
+    },
+    {
+        id: 0,
+        name: "econom",
+    },
+  ]
 
-  function onclick({i, placeholder}: any) {
-    setName((p) => ({ ...p, [placeholder]: i.name, speakerId : i._id }));
-  }
+
+  useEffect(() => {
+    if (!user?._id) return;
+    setName(user);
+  }, []);
 
   return (
     <Styledapp>
       <form action="">
-        <h1>{adduser ? "Add activity" : "Edit activity"}</h1>
-        <Secect placeholder="type" options={options} />
+        <h1>{adduser ? "Add user" : "Edit user"}</h1>
+        <Secect placeholder="category" setName={setName} options={options} />
         <Input
-          placeholder="Name in English *"
-          onChange={onchangeName}
-          name="en"
-          value={name.name.en}
-          setName={setName}
-        />
-        <Input
-          placeholder="Name in Russian *"
-          onChange={onchangeName}
-          name="ru"
-          value={name.name.ru}
-          setName={setName}
-        />
-        <Input
-          placeholder="Name in Uzbek *"
-          name="uz"
-          onChange={onchangeName}
-          value={name.name.uz}
-          setName={setName}
-        />
-        <Input
-          placeholder="Start time *"
-          name="startTime"
+          placeholder="Sector *"
           onChange={onchange}
-          value={name.startTime}
+          name="sector"
+          value={name.sector}
           setName={setName}
         />
         <Input
-          placeholder="End time *"
-          name="endTime"
+          placeholder="Row *"
+          name="row"
           onChange={onchange}
-          value={name.endTime}
+          value={name.row}
           setName={setName}
         />
-        <Secect placeholder="Speaker" options={options} />
+        <Input
+          placeholder="Seat *"
+          name="seat"
+          onChange={onchange}
+          value={name.seat}
+          setName={setName}
+        />
+        <Input
+          placeholder="Narxi *"
+          name="price"
+          onChange={onchange}
+          value={name.price}
+          setName={setName}
+        />
         <div className="buton">
           <Botton pe={false} typee="button" onclik={() => save()}>
             Save
@@ -136,6 +135,7 @@ const Styledapp = styled.div`
   top: 0;
   right: 0;
   justify-content: flex-end;
+
   form {
     .buton {
       display: flex;

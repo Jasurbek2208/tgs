@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 // Context
-import { IContext, MyContext } from "../../../context/Context";
+import { MyContext } from "../../../context/Context";
+import { IContext } from "../../../interface/Interface";
 
 // Components
 import Botton from "../../addUserModal/botom/Botton";

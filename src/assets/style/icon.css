@@ -44,6 +44,10 @@
   mask-image: url("../icon/sidebarTicket.svg");
   -webkit-mask-image: url("../icon//sidebarTicket.svg");
 }
+.icon.comments {
+  mask-image: url("../icon/comments.svg");
+  -webkit-mask-image: url("../icon//comments.svg");
+}
 .icon.icon-settings {
   mask-image: url("../icon/sidebarSettings.svg");
   -webkit-mask-image: url("../icon//sidebarSettings.svg");

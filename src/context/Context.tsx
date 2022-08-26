@@ -12,46 +12,7 @@ import {
 } from "react";
 
 export const MyContext = createContext({});
-export interface IContext {
-  // Login
-  auth?: {};
-  setAuth?: Dispatch<SetStateAction<{}>>;
-  userLogin?: () => Response;
-  // Position
-  getPosition?: () => Promise<void>;
-  postPosition?: Function;
-  putPosition?: Function;
-  deletePosition?: Function;
-  userPosit?: IPosit<IData>;
-  setUserPosit?: Dispatch<SetStateAction<{}>>;
-  // Field
-  getFeild?: () => Promise<void>;
-  userField?: IPosit<IData>;
-  postFeild?: Function;
-  deleteFeild?: Function;
-  PutFeild?: Function;
-  // Agenda
-  userAgenda?: IPosit<IData>;
-  setUserAgenda?: Dispatch<SetStateAction<{}>>;
-  getAgenda?: () => Promise<void>;
-  postAgenda?: Function;
-  deleteAgenda?: Function;
-  // Loading
-  loading?: boolean;
-  addLoading?: boolean;
-  setLoading?: Function;
-  // users
-  Getusers?: () => Promise<void>;
-  users?: IPosit<IData>;
-  postUsers?: Function;
-  usersDelete?: Function;
-  usersPut?: Function;
-  // Speaker
-  SpeakerGet?: () => Promise<void>;
-  usersSpeaker?: any;
-  SpeakerPost?: Function;
-  SpeakerDelete?:Function;
-}
+
 
 // Dispatch<SetStateAction<IState>>
 
@@ -95,22 +56,22 @@ export interface IData {
   endTime: string;
 }
 export interface Speaker {
-  data:{
-  _id: string;
-  checked?: boolean;
-  name: {
-    uz: string;
-    en: string;
-    ru: string;
+  data: {
+    _id: string;
+    checked?: boolean;
+    name: {
+      uz: string;
+      en: string;
+      ru: string;
+    };
+    bio?: {
+      uz: string;
+      en: string;
+      ru: string;
+    };
+    image?: string;
+    __v?: number;
   };
-  bio?: {
-    uz: string;
-    en: string;
-    ru: string;
-  };
-  image?: string;
-  __v?: number;
-  }
 }
 export interface S {
   _id: string;
@@ -152,14 +113,32 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   });
 
   // POSITION REQUEST INTERFACE
-  const [userPosit, setUserPosit] = useState<IPosit<[IData]>>({total : 0, data : []});
+  const [userPosit, setUserPosit] = useState<IPosit<[IData]>>({
+    total: 0,
+    data: [],
+  });
   // FIELD REQUEST INTERFACE
-  const [userField, setUserField] = useState<IPosit<[IData]>>({total : 0, data : []});
+  const [userField, setUserField] = useState<IPosit<[IData]>>({
+    total: 0,
+    data: [],
+  });
   // AGENDA REQUEST INTERFACE
-  const [userAgenda, setUserAgenda] = useState<IPosit<[IData]>>({total : 0, data : []});
-  // AGENDA REQUEST INTERFACE
-  const [users, setusers] = useState<IPosit<IUsers>>({total : 0, data : []});
-  const [usersSpeaker, setusersSpeaker] = useState<IPosit<Speaker>>({total : 0, data : []});
+  const [userAgenda, setUserAgenda] = useState<IPosit<[IData]>>({
+    total: 0,
+    data: [],
+  });
+  // USERS REQUEST INTERFACE
+  const [users, setusers] = useState<IPosit<IUsers>>({ total: 0, data: [] });
+  // TICKETS REQUEST INTERFACE
+  const [tickets, setTickets] = useState<IPosit<IUsers>>({
+    total: 0,
+    data: [],
+  });
+  // SPEAKERS REQUEST INTERFACE
+  const [usersSpeaker, setusersSpeaker] = useState<IPosit<Speaker>>({
+    total: 0,
+    data: [],
+  });
   // LOADING STATE
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -309,7 +288,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   // ===============================================
 
   // AGENDA GET STATE SUCSESS SET
-  function sucsessAgenda(res:  IPosit<[IData]>) {
+  function sucsessAgenda(res: IPosit<[IData]>) {
     setUserAgenda(res);
   }
 
@@ -356,7 +335,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     setLoading(true);
     try {
       const res = await myAxios("user?page=1&limit=10");
-      setusers(res.data.data.data);
+      setusers(res.data.data);
     } catch (error) {
       throw error;
     } finally {
@@ -367,7 +346,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
   async function postUsers(body: any) {
     setLoading(true);
     try {
-      const res = await myAxios.post("/user");
+      const res = await myAxios.post("/user", body);
       Getusers();
       console.log(res);
       // toast.success(res.data.message);
@@ -418,7 +397,7 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // post speaker
-  async function SpeakerPost(body:{}) {
+  async function SpeakerPost(body: {}) {
     setLoading(true);
     try {
       const res = await myAxios.post("/speaker", body);
@@ -431,10 +410,10 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
     }
   }
   // delete speaker
-  async function SpeakerDelete(ketmon:{}) {
+  async function SpeakerDelete(ketmon: {}) {
     setLoading(true);
     try {
-      const res = await myAxios.delete("/speaker",{data:ketmon});
+      const res = await myAxios.delete("/speaker", { data: ketmon });
       SpeakerGet();
     } catch (error) {
       throw error;
@@ -449,6 +428,47 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
       const res = await myAxios.put("/speaker");
       console.log(res);
       SpeakerGet();
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+  // ============================================
+
+  // TICKETS ================
+  // GET TICKETS
+  async function getTickets() {
+    setLoading(true);
+    try {
+      const res = await myAxios("ticket?page=1&limit=10");
+      setTickets(res.data.data);
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+  // post tickets
+  async function postTickets(body: {}) {
+    setLoading(true);
+    try {
+      const res = await myAxios.post("/ticket", body);
+      getTickets();
+      // toast.success(res.data.message);
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(true);
+    }
+  }
+  // delete tickets
+  async function ticketsDelete(ids: {}) {
+    setLoading(true);
+    try {
+      const res = await myAxios.delete("ticket", { data: ids });
+      getTickets();
+      // toast.success(res.data.message);
     } catch (error) {
       throw error;
     } finally {
@@ -490,6 +510,10 @@ const LoginContext: FC<{ children?: ReactNode }> = ({ children }) => {
         SpeakerDelete,
         SpeakerPut,
         usersSpeaker,
+        getTickets,
+        postTickets,
+        ticketsDelete,
+        tickets,
       }}
     >
       {children}
